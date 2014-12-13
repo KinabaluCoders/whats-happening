@@ -1,18 +1,22 @@
 <html>
 <head>
+<!--
 <link href="../bootstrap-3.3.1-dist/css/bootstrap.min.css" rel="stylesheet">
+-->
 <link rel="stylesheet" href="masonry-example.css" />
 
 <script src="../jquery/jquery-2.1.1.min.js"></script>
 
-<script src="masonry-ordered/js/jquery.masonry.js"></script>
-<script src="masonry-ordered/jquery.masonry.ordered.js"></script>
+<script src="extracted-masonry-2.1.05-ordered/jquery.masonry.js"></script>
+<script src="extracted-masonry-2.1.05-ordered/jquery.masonry.ordered.js"></script>
 
 <script type="text/javascript">
 jQuery(document).ready(function($){
     $('#basic').masonry({
         itemSelector: '.item',
         columnWidth: 300,
+        isFitWidth: true,
+        isAnimated: true,
         layoutPriorities: {
             // Masonry default: Try to occupy highest available position.
             // Weight: Pixels of vertical distance from most upper spot.
