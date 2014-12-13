@@ -1,0 +1,1 @@
+adapted from http://bootsnipp.com/snippets/featured/timeline-responsive
