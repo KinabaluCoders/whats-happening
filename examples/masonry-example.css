@@ -11,7 +11,6 @@
   height: 60px;
   float: left;
   border: 1px solid;
-  background: #09F;
 }
 
 .item.height2 { height: 109px; }
@@ -19,9 +18,15 @@
 .item.height4 { height: 227px; }
 .item.height5 { height: 286px; }
 
-.stamp {
-  background: red;
-  opacity: 0.75;
-  position: absolute;
-  border: 1px solid;
+.-timeline-pointer
+{
+    position:absolute; 
+    width:100px; 
+    height:1px; 
+    background:rgba(0,0,0,0.5);
 }
+
+.masonry.container[data-columns="4"] .masonry-brick[data-column="0"] .-timeline-pointer { top:10px; right:0px; }
+.masonry.container[data-columns="4"] .masonry-brick[data-column="1"] .-timeline-pointer { top:20px; right:0px; }
+.masonry.container[data-columns="4"] .masonry-brick[data-column="2"] .-timeline-pointer { top:30px; left:0px; }
+.masonry.container[data-columns="4"] .masonry-brick[data-column="3"] .-timeline-pointer { top:40px; left:0px; }

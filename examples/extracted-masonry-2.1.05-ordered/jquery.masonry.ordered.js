@@ -120,6 +120,8 @@
     position[ dir ] = this.columnWidth * shortCol + this.offset.x;
     this.styleQueue.push({ $el: $brick, style: position });
 
+    $brick.attr('data-column', shortCol); // store column number
+
     // apply setHeight to necessary columns
     var setHeight = groupY[ shortCol ] + $brick.outerHeight(true),
         setSpan = this.cols + 1 - len;
@@ -127,6 +129,47 @@
       this.colYs[ shortCol + i ] = setHeight;
     }
   }
+
+    $.Mason.prototype._getBricks = function($elems){
+        var $bricks = this._filterFindBricks($elems)
+            .css({ position: 'absolute' })
+            .addClass('masonry-brick');
+
+        // EXTRA: add timeline pointer
+        $bricks.each(function(i, brick){
+            var $brick = $(brick);
+            if(!$brick.data('pointer'))
+            {
+                var pointer = $('<div class="-timeline-pointer"></div>');
+                $brick.append(pointer);
+                $brick.data('pointer', pointer)
+            }
+        });
+
+        return $bricks;
+    };
+
+    $.Mason.prototype._getColumns = function(){
+        var container = this.options.isFitWidth ? this.element.parent() : this.element,
+                        containerWidth = container.width();
+
+        // use fluid columnWidth function if there
+        this.columnWidth = this.isFluid ? this.options.columnWidth( containerWidth ) :
+                    // if not, how about the explicitly set option?
+                    this.options.columnWidth ||
+                    // or use the size of the first item
+                    this.$bricks.outerWidth(true) ||
+                    // if there's no items, use size of container
+                    containerWidth;
+
+        this.columnWidth += this.options.gutterWidth;
+
+        this.cols = Math.floor( ( containerWidth + this.options.gutterWidth ) / this.columnWidth );
+        this.cols = Math.max( this.cols, 1 );
+
+        this.element.attr("data-columns", this.cols); // EXTRA: store number of columns
+    }
+
 })( window, jQuery );
 
 /* vi: set ts=2 sw=2 expandtab: */
