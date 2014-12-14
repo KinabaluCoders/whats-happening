@@ -1,0 +1,3 @@
+[submodule "examples/shapeshift"]
+	path = examples/shapeshift
+	url = git@github.com:McPants/jquery.shapeshift.git
