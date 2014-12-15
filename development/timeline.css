@@ -1,0 +1,25 @@
+.container 
+{
+  border: 1px dashed #CCC;
+  position: relative;
+  max-width:500px;
+}
+
+.container > div 
+{
+  position: absolute;
+  height: 100px;
+  width: 100px;
+}
+
+.container > .ss-placeholder-child 
+{
+  background: transparent;
+  border: 1px dashed blue;
+}
+
+.container .-month-zone
+{
+    z-index:0;
+    border:1px dotted red;
+}
