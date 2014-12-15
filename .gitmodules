@@ -1,3 +1,3 @@
-[submodule "examples/shapeshift"]
-	path = examples/shapeshift
-	url = git@github.com:McPants/jquery.shapeshift.git
+[submodule "examples/jquery.shapeshift.kinabalucoders"]
+	path = examples/jquery.shapeshift.kinabalucoders
+	url = git@github.com:KinabaluCoders/jquery.shapeshift.git

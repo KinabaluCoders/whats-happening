@@ -1,25 +1,27 @@
 .container 
 {
-  border: 1px dashed #CCC;
-  position: relative;
-  max-width:500px;
+    border: 1px dashed #CCC;
+    position: relative;
+    padding:0;
 }
 
-.container > div 
+.container > .item 
 {
-  position: absolute;
-  height: 100px;
-  width: 100px;
+    position: absolute;
+    /* height: 100px; /* rely on masonry-examples.css variable heights first */
+    width:350px;
 }
 
-.container > .ss-placeholder-child 
-{
-  background: transparent;
-  border: 1px dashed blue;
+@media (max-width: 375px) {
+    .container > .item
+    {
+        background: rgba(0,255,0,0.3);
+        width:100%;
+    }
 }
 
 .container .-month-zone
 {
-    z-index:0;
+    z-index:-1;
     border:1px dotted red;
 }
