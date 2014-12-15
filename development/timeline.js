@@ -83,4 +83,15 @@ $(document).ready(function() {
         initialise_shapeshift();
         return false;
     });
+
+    $("#randomise-heights").click(function(e){
+        $container.find(".item").each(function(i, item){
+            var $item = $(item);
+            $item.css("height", (Math.random() * (200 - 30) + 30) + "px");
+        });
+        $container.trigger("ss-destroy");
+        initialise_shapeshift();
+        return false;
+    });
+
 })
