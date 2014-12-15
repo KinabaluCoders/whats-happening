@@ -12,17 +12,92 @@
             border:1px dotted black;
             padding:10px;   
         }
+
+        .row:nth-child(2n+1)
+        {
+            background:rgba(0,0,0, 0.25);
+        }
+
+        .row:nth-child(2n+1) div:nth-child(1) div,
+        .row:nth-child(2n) div:nth-child(1),
+        .row:nth-child(2n) div:nth-child(2) div
+        {
+            float:right;
+        }
+        .row:nth-child(2n) div:nth-child(1) div
+        {
+            float:left;
+        }
     </style>
+    <script src="../jquery/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript">
+
+    jQuery(document).ready(function($){
+        var $timeline = $('#timeline');
+
+        function add_event(event)
+        {
+            update_row(event);
+        }
+
+        function update_row(event)
+        {
+            $row = $timeline.find('.row[data-day="' + event.segment + '"]');
+            if($row.length <= 0)
+            {
+                $row = $('<div class="row" data-day="' + event.segment + '"></div>');
+
+                $timeline.append($row);
+            }
+
+            $columns = $row.find(".column");
+            $events = $row.find(".event");
+            column_no = $events.length % 2;
+            if(!$columns[column_no])
+            {
+                var $column = new_col();
+                $columns.push($column)
+                $row.append($column);
+            }
+
+            $($columns[column_no]).append(new_event(event)); 
+        }
+
+        function new_col()
+        {
+            $col = $('<div class="column col-xs-12 col-sm-6 col-md-6"></div>');
+            return $col;
+        }
+
+        function new_event(event)
+        {
+            $event = $('<div class="event col-xs-12 col-sm-12 col-md-6">' + event.title + ' (' + event.segment + ')</div>');
+            return $event;
+        }
+
+        $("#add-event").click(function(e){
+            var event =
+            {
+                segment: Math.floor(Math.random() * (4 - 1)) + 1,
+                title: (new Date()).toString()
+            };
+            add_event(event);
+        });
+    });
+
+    </script>
 </head>
 <body>
 
-    <div class="container-fluid">
+    <input id="add-event" type="button" value="add event" />
+
+    <div id="timeline" class="container-fluid">
         <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-6">
-                <div class="col-xs-12 col-sm-12 col-md-6 pull-right">
+                <div class="col-xs-12 col-sm-12 col-md-6">
                     Event 1
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-6 pull-right">
+                <div class="col-xs-12 col-sm-12 col-md-6">
                     Event 2
                 </div>
             </div>
@@ -36,8 +111,8 @@
                 </div>
             </div>
         </div>
-        <div class="row alternate">
-            <div class="col-xs-12 col-sm-6 col-md-6 pull-right">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-6">
                 <div class="col-xs-12 col-sm-12 col-md-6">
                     Event 1
                 </div>
@@ -47,10 +122,10 @@
             </div>
 
             <div class="col-xs-12 col-sm-6 col-md-6">
-                <div class="col-xs-12 col-sm-12 col-md-6 pull-right">
+                <div class="col-xs-12 col-sm-12 col-md-6">
                     Event 3
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-6 pull-right">
+                <div class="col-xs-12 col-sm-12 col-md-6">
                     Event 4
                 </div>
             </div>
