@@ -5,7 +5,7 @@ $(document).ready(function() {
     {
         $container.shapeshift({
             selector: ".item",
-            animated: false,
+            animated: true,
             enableDrag: false,
             enableCrossDrop: false,
             gutterX: 0,
@@ -15,9 +15,10 @@ $(document).ready(function() {
             align: "center"
         })
     }
-    
-    $container.on("ss-arranged", function(e){
-        // console.log("arranged");
+
+    function render_months()
+    {
+        console.log('rendering months...');
 
         $container.find(".-month-zone").remove();
 
@@ -50,30 +51,32 @@ $(document).ready(function() {
 
             zone.appendTo($container)
         }
+    }
+
+    // source: http://davidwalsh.name/javascript-debounce-function
+    function debounce(func, wait, immediate) {
+        var timeout;
+        return function() {
+            var context = this, args = arguments;
+            var later = function() {
+                timeout = null;
+                if (!immediate) func.apply(context, args);
+            };
+            var callNow = immediate && !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+            if (callNow) func.apply(context, args);
+        };
+    };
+
+    ratelimited_render_months = debounce(render_months, 500);
+    $container.on("ss-arranged", function(e){
+        ratelimited_render_months();
     });
 
     initialise_shapeshift();
-    $container.trigger("ss-arranged");
 
-    /*
-    var current_window_width = 0;
-    $(window).resize(function(e){
-        previous_window_width = current_window_width;
-        current_window_width = $(window).innerWidth();
-        if(current_window_width <= 375 && previous_window_width > 375)
-        {
-            console.log("portable");
-            $container.trigger("ss-destroy");
-            setTimeout(initialise_shapeshift, 500);
-        }
-        else if(current_window_width >= 375 && previous_window_width < 375)
-        {
-            console.log("wide");
-            $container.trigger("ss-destroy");
-            setTimeout(initialise_shapeshift, 500);
-        }
-    });
-    */
+    $container.trigger("ss-arranged");
 
     $("#reset-timeline").click(function(e){
         $container.trigger("ss-destroy");
