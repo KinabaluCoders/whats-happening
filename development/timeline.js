@@ -5,8 +5,7 @@ $(document).ready(function() {
         selector: ".item",
         animated: false,
         enableDrag: false,
-        enableCrossDrop: false,
-        minColumns: 2
+        enableCrossDrop: false
     })
     
     $container.on("ss-arranged", function(e){
