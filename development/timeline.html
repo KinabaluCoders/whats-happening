@@ -4,50 +4,58 @@
     <meta charset="UTF-8">
     <title>Timeline Development</title>
 
-    <!-- jQuery / jQuery UI -->
-    <script src="../jquery/jquery-2.1.1.min.js"></script>
-    <script src="../jquery/jquery-ui-1.11.2/jquery-ui.min.js"></script>
-
-    <!-- jQuery Touch Punch - Enable Touch Drag and Drop -->
-    <script src="../examples/jquery.shapeshift.kinabalucoders/core/vendor/jquery.touch-punch.min.js"></script>
-
-    <!-- jQuery.Shapeshift -->
-    <script src="../examples/jquery.shapeshift.kinabalucoders/core/jquery.shapeshift.js"></script>
-
-    <!-- Development Files -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="../bootstrap-3.3.1-dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../examples/extracted-masonry-2.1.05-ordered/masonry-example.css" />
-    <link rel="stylesheet" href="timeline.css" />
-    <script src="timeline.js"></script>
+    <style>
+        div
+        {
+            border:1px dotted black;
+            padding:10px;   
+        }
+    </style>
 </head>
 <body>
-    <div style="position:fixed; top:0; left:0; z-index:100; background:white; width:50px; height:20px;">
-        <a id="reset-timeline" href="#">reset</a>
-        <a id="randomise-heights" href="#">randomise</a>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-offset-1 col-xs-11 col-sm-offset-0 col-sm-6 col-md-6">
+                <div class="col-xs-12 col-sm-12 col-md-6 pull-right">
+                    Event 1
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 pull-right">
+                    Event 2
+                </div>
+            </div>
+
+            <div class="col-xs-offset-1 col-xs-11 col-sm-offset-0 col-sm-6 col-md-6">
+                <div class="col-xs-12 col-sm-12 col-md-6">
+                    Event 3
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6">
+                    Event 4
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-offset-1 col-xs-11 col-sm-offset-0 col-sm-6 col-md-6">
+                <div class="col-xs-12 col-sm-12 col-md-6 pull-right">
+                    Event 1
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 pull-right">
+                    Event 2
+                </div>
+            </div>
+
+            <div class="col-xs-offset-1 col-xs-11 col-sm-offset-0 col-sm-6 col-md-6">
+                <div class="col-xs-12 col-sm-12 col-md-6">
+                    Event 3
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6">
+                    Event 4
+                </div>
+            </div>
+        </div>
     </div>
-    <div id="basic" class="container">
-        <div class="item -month-marker">1 - Feb 2015</div>
-        <div class="item height4">2</div>
-        <div class="item w2 height2">3</div>
-        <div class="item w2">4</div>
-        <div class="item height3">5</div>
-        <div class="item w3">6</div>
-        <div class="item">7</div>
-        <div class="item height4">8</div>
-        <div class="item -month-marker">9 - Jan 2015</div>
-        <div class="item w2 height4">10</div>
-        <div class="item w2">11</div>
-        <div class="item height5">12</div>
-        <div class="item w3">13</div>
-        <div class="item">14</div>
-        <div class="item -month-marker">15 - Dec 2015</div>
-        <div class="item">16</div>
-        <div class="item w2 height5">17</div>
-        <div class="item w2">18</div>
-        <div class="item height3">19</div>
-        <div class="item w3">20</div>
-        <div class="item">21</div>
-    </div>
+
 </body>
 </html>
