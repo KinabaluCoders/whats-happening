@@ -7,23 +7,28 @@ function add_event(event)
     update_row(event);
 }
 
-function update_row(event)
+function determine_row(event)
 {
-    $row = $timeline.find('.row[data-day="' + event.segment + '"]');
+    var $row = $timeline.find('.row[data-segment="' + event.segment + '"]');
     if($row.length <= 0)
     {
-        $row = $('<div class="row" data-day="' + event.segment + '"></div>');
+        $row = $('<div class="row" data-segment="' + event.segment + '"></div>');
 
         $timeline.append($row);
     }
+
+    return $row;
+}
+
+function update_row(event)
+{
+    var $row = determine_row(event);
 
     $columns = $row.find(".column"); // max: 2 .column per .row
     $subcolumns = $row.find(".subcolumn"); // max: 4 .subcolumn per .row, 2 .subcolumn / .column
     $events = $row.find(".event"); // unlimited, added into subcolumn[++]: 0 1 2 3 0
     subcolumn_no = $events.length % 4;
     column_no = $events.length % 2;
-
-    console.log(column_no, subcolumn_no);
 
     if(!$columns[column_no])
     {
@@ -60,19 +65,23 @@ function new_subcolumn()
 
 function new_event(event)
 {
-    $event = $('<div class="event col-xs-12 col-sm-12 col-md-12"></div>');
+    $event = $('<div class="event col-xs-12 col-sm-12 col-md-12"></div>').hide();
     $event.append($('<div class="arrow-line visible-md-block visible-lg-block"></div>'));
     $event.append($('<div class="timeline-icon"><span class="glyphicon glyphicon-star-empty"></span></div>'));
-    $event.append(event.title + ' (' + event.Date.toString() + ')');
+    $event.append($('<b style="font-size:2.0em; float:left; margin-right:3px;">' + event.Date.getMonth() + "/" + event.Date.getDate() + "</b>"));
+    $event.append(event.title + ' (' + event.Date.toString() + ', ' + event.segment + ')');
+    $event.fadeIn("fast");
     return $event;
 }
 
 $("#add-event").click(function(e){
+    var event_date = debugGenerate_randomDate(new Date(2014, 11, 01), new Date(2015, 06, 01));
+    var event_segment = event_date.getFullYear() + "-" + event_date.getMonth();
     var event =
     {
-        Date: debugGenerate_randomDate(new Date(2014, 11, 01), new Date(2015, 06, 01)),
-        segment: debugGenerate_randomInteger(1, 3),
-        title: debugGenerate_loremIpsum(30, 10)
+        Date: event_date,
+        segment: event_segment,
+        title: debugGenerate_loremIpsum(20, 3)
     };
     add_event(event);
 });
