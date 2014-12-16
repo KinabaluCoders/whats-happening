@@ -7,10 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="../bootstrap-3.3.1-dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        div
+        /* purely styles */
+
+        .event
         {
-            border:1px dotted black;
-            padding:10px;   
+            margin-top:5px;
+            border: 1px solid #d4d4d4;
+            border-radius: 2px;
+            padding: 20px;
+            position: relative;
+            -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
         }
 
         /* add a center line */
@@ -40,18 +47,30 @@
             }
         }
 
-        /* highlight alternate rows (debugging) */
+        /* debug (bootstrap) */
 
-        .row:nth-child(2n+1)
+        .debug-bootstrap div
         {
+            /* highlight bootstrap formatting */
+            border:1px dotted black;
+            padding:10px;   
+        }
+
+        .debug-bootstrap  .row:nth-child(2n+1)
+        {
+            /* highlight alternate rows (debugging) */
             background:rgba(0,0,0, 0.25);
         }
 
-        /* hide reference/debug row */
-
         .row.reference 
         {
+            /* hide reference/debug row */
             display:none;
+        }
+
+        .debug-bootstrap .row.reference
+        {
+            display:block
         }
 
         /* pull the first column either left or right */
@@ -158,19 +177,19 @@
         <div class="row reference">
             <div class="column col-xs-offset-1 col-xs-11 col-sm-offset-0 col-sm-6 col-md-6">
                 <div class="subcolumn col-xs-12 col-sm-12 col-md-6">
-                    <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="event col-xs-12 col-sm-12 col-md-12">
                         Event 1
                     </div>
                 </div>
                 <div class="subcolumn col-xs-12 col-sm-12 col-md-6">
-                    <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="event panel col-xs-12 col-sm-12 col-md-12">
                         Event 2<br />
                         Long Event <br />
                         Long Event <br />
                         Long Event <br />
                         Long Event <br />
                     </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="event col-xs-12 col-sm-12 col-md-12">
                         Event 2+
                     </div>
                 </div>
@@ -178,12 +197,12 @@
 
             <div class="column col-xs-offset-1 col-xs-11 col-sm-offset-0 col-sm-6 col-md-6">
                 <div class="subcolumn col-xs-12 col-sm-12 col-md-6">
-                    <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="event col-xs-12 col-sm-12 col-md-12">
                         Event 3
                     </div>
                 </div>
                 <div class="subcolumn col-xs-12 col-sm-12 col-md-6">
-                    <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="event col-xs-12 col-sm-12 col-md-12">
                         Event 4
                     </div>
                 </div>
@@ -193,19 +212,19 @@
         <div class="row reference">
             <div class="column col-xs-offset-1 col-xs-11 col-sm-offset-0 col-sm-6 col-md-6">
                 <div class="subcolumn col-xs-12 col-sm-12 col-md-6">
-                    <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="event col-xs-12 col-sm-12 col-md-12">
                         Event 1
                     </div>
                 </div>
                 <div class="subcolumn col-xs-12 col-sm-12 col-md-6">
-                    <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="event col-xs-12 col-sm-12 col-md-12">
                         Event 2<br />
                         Long Event <br />
                         Long Event <br />
                         Long Event <br />
                         Long Event <br />
                     </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="event col-xs-12 col-sm-12 col-md-12">
                         Event 2+
                     </div>
                 </div>
@@ -213,12 +232,12 @@
 
             <div class="column col-xs-offset-1 col-xs-11 col-sm-offset-0 col-sm-6 col-md-6">
                 <div class="subcolumn col-xs-12 col-sm-12 col-md-6">
-                    <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="event col-xs-12 col-sm-12 col-md-12">
                         Event 3
                     </div>
                 </div>
                 <div class="subcolumn col-xs-12 col-sm-12 col-md-6">
-                    <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="event col-xs-12 col-sm-12 col-md-12">
                         Event 4
                     </div>
                 </div>
