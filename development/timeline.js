@@ -62,6 +62,7 @@ function new_event(event)
 {
     $event = $('<div class="event col-xs-12 col-sm-12 col-md-12"></div>');
     $event.append($('<div class="arrow-line visible-md-block visible-lg-block"></div>'));
+    $event.append($('<div class="timeline-icon"><span class="glyphicon glyphicon-star-empty"></span></div>'));
     $event.append(event.title + ' (' + event.Date.toString() + ')');
     return $event;
 }
