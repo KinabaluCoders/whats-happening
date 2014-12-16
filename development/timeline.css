@@ -166,14 +166,91 @@
     }
 }
 
+/* timeline icons */
+
+.timeline-icon
+{
+    /* timeline-icons on left side of timeline show icons on right */
+
+    position:absolute;
+    top:10px;
+    width:30px;
+    height:30px;
+
+    padding-top:6px;
+    padding-left:1px;
+    text-align:center;
+
+    background-color: #999999;
+    border-top-right-radius: 50%;
+    border-top-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    border-bottom-left-radius: 50%;
+
+    left:100%;
+    right:auto;
+    margin-left:16px;
+}
+
+.row:nth-child(2n+1) .column:nth-child(2) .timeline-icon,
+.row:nth-child(2n) .column:nth-child(1) .timeline-icon
+{
+    /* timeline-icons on right side of timeline show timeline-icons on left */
+
+    left: auto;
+    right: 100%;
+    margin-right:16px;
+}
+
+@media(max-width: 767px)
+{
+    .timeline-icon 
+    {
+        left: auto;
+        right:100%;
+        margin-right:16px;
+    }
+}
+
+@media (min-width: 992px)
+{
+    /* push down timeline-icons on far left and right */
+    .subcolumn:nth-child(2) .timeline-icon
+    {
+        top:30px;
+    }
+
+    /* all timeline-icons on far left of medium and up  */
+    .row:nth-child(2n) .column:nth-child(2) .subcolumn:nth-child(2) .timeline-icon,
+    .row:nth-child(2n+1) .column:nth-child(1) .subcolumn:nth-child(2) .timeline-icon
+    {
+        background:rgba(255,0,0,0.5);
+        left:200%;
+        right:auto;
+        margin-left:48px;
+        margin-right:0;
+    }
+
+    /* all timeline-icons on far right of medium and up  */
+    .row:nth-child(2n+1) .column:nth-child(2) .subcolumn:nth-child(2) .timeline-icon,
+    .row:nth-child(2n) .column:nth-child(1) .subcolumn:nth-child(2) .timeline-icon
+    {
+        background:rgba(0,255,0,0.5);
+        left:auto;
+        right:200%;
+        margin-left:0;
+        margin-right:48px;
+    }
+}
+
 /* add a center line */
 
-#timeline
+#timeline-background
 {
     position:relative;
 }
 
-#timeline:before
+#timeline-background:before
 {
     top: 0;
     bottom:0;
@@ -187,8 +264,8 @@
 
 @media(max-width: 767px)
 {
-    #timeline:before 
+    #timeline-background:before 
     {
-        left: 30px;
+        left: 8.3%;
     }
 }
