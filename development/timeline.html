@@ -47,6 +47,13 @@
             background:rgba(0,0,0, 0.25);
         }
 
+        /* hide reference/debug row */
+
+        .row.reference 
+        {
+            display:none;
+        }
+
         /* push the first event either left or right */
 
         .row:nth-child(2n+1) div:nth-child(1) div,
@@ -123,7 +130,7 @@
     <input id="add-event" type="button" value="add event" />
 
     <div id="timeline">
-        <div class="row">
+        <div class="row reference">
             <div class="col-xs-offset-1 col-xs-11 col-sm-offset-0 col-sm-6 col-md-6">
                 <div class="col-xs-12 col-sm-12 col-md-6">
                     Event 1
@@ -142,7 +149,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row reference">
             <div class="col-xs-offset-1 col-xs-11 col-sm-offset-0 col-sm-6 col-md-6">
                 <div class="col-xs-12 col-sm-12 col-md-6">
                     Event 1
