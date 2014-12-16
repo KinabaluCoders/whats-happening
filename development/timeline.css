@@ -152,18 +152,15 @@
 {
     /* on large screens, shift arrows (and arrow-lines) on far left/right down */
 
-    .subcolumn:nth-child(2) .event:before,
-    .subcolumn:nth-child(4) .event:before
+    .subcolumn:nth-child(2) .event:before
     {
         margin-top:20px;
     }
-    .subcolumn:nth-child(2) .event:after,
-    .subcolumn:nth-child(4) .event:after
+    .subcolumn:nth-child(2) .event:after
     {
         margin-top:20px;
     }
-    .subcolumn:nth-child(2) .arrow-line,
-    .subcolumn:nth-child(4) .arrow-line
+    .subcolumn:nth-child(2) .arrow-line
     {
         margin-top:44px;
     }
