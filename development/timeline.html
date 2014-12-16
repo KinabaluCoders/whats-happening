@@ -68,6 +68,7 @@
         }
     </style>
     <script src="../jquery/jquery-2.1.1.min.js"></script>
+    <script src="debug.generator-functions.js"></script>
     <script type="text/javascript">
 
     jQuery(document).ready(function($){
@@ -109,15 +110,16 @@
 
         function new_event(event)
         {
-            $event = $('<div class="event col-xs-12 col-sm-12 col-md-6">' + event.title + ' (' + event.segment + ')</div>');
+            $event = $('<div class="event col-xs-12 col-sm-12 col-md-6">' + event.title + ' (' + event.segment + ') (' + event.Date.toString() + ')</div>');
             return $event;
         }
 
         $("#add-event").click(function(e){
             var event =
             {
+                Date: debugGenerate_randomDate(new Date(2014, 11, 01), new Date(2015, 06, 01)),
                 segment: Math.floor(Math.random() * (4 - 1)) + 1,
-                title: (new Date()).toString()
+                title: debugGenerate_loremIpsum(30, 10)
             };
             add_event(event);
         });
