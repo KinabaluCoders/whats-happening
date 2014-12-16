@@ -3,7 +3,12 @@
 function debugGenerate_randomDate(Start, End)
 {
     return new Date(Start.getTime() + Math.random() * (End.getTime() - Start.getTime()));
-}
+};
+
+function debugGenerate_randomInteger(inclusive_minimum, inclusive_maximum)
+{
+    return Math.floor(Math.random() * ((inclusive_maximum + 1) - inclusive_minimum)) + inclusive_minimum
+};
 
 // Lorem ipsum generator
 // @author C. Peter Chen of http://dev-notes.com
@@ -28,4 +33,4 @@ function debugGenerate_loremIpsum(maxWordCount, minWordCount)
     }
 
     return ret;
-}
+};
