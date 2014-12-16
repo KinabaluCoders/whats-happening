@@ -1,27 +1,120 @@
-.container 
+/* pull the first column either left or right */
+
+.row:nth-child(2n+1) .column:nth-child(1) div,
+.row:nth-child(2n) .column:nth-child(1),
+.row:nth-child(2n) .column:nth-child(2) div
 {
-    border: 1px dashed #CCC;
-    position: relative;
-    padding:0;
+    float:right;
+}
+.row:nth-child(2n) .column:nth-child(1) div
+{
+    float:left;
 }
 
-.container > .item 
+/* event panel style */
+
+.event
+{
+    margin-top:5px;
+    border: 1px solid #d4d4d4;
+    border-radius: 2px;
+    padding: 20px;
+    position: relative;
+    -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+}
+
+/* css arrow */
+
+.event:before
 {
     position: absolute;
-    /* height: 100px; /* rely on masonry-examples.css variable heights first */
-    width:350px;
+    top: 26px;
+    right: -15px;
+    display: inline-block;
+    border-top: 15px solid transparent;
+    border-left: 15px solid #ccc;
+    border-right: 0 solid #ccc;
+    border-bottom: 15px solid transparent;
+    content: " ";
+}
+.event:after
+{
+    position: absolute;
+    top: 27px;
+    right: -14px;
+    display: inline-block;
+    border-top: 14px solid transparent;
+    border-left: 14px solid #fff;
+    border-right: 0 solid #fff;
+    border-bottom: 14px solid transparent;
+    content: " ";
 }
 
-@media (max-width: 375px) {
-    .container > .item
-    {
-        background: rgba(0,255,0,0.3);
-        width:100%;
+/*
+    .row:nth-child(2n+1) .column:nth-child(2)
+        rows: 1,3,5,... column 2 (visually events on right side)
+
+    .row:nth-child(2n) .column:nth-child(1)
+        rows: 2,4,6,... column 1 (visually events on right side)
+*/
+
+.row:nth-child(2n+1) .column:nth-child(2) .event:before,
+.row:nth-child(2n) .column:nth-child(1) .event:before
+{
+    border-left-width: 0;
+    border-right-width: 15px;
+    left: -15px;
+    right: auto;
+}
+.row:nth-child(2n+1) .column:nth-child(2) .event:after,
+.row:nth-child(2n) .column:nth-child(1) .event:after
+{
+    border-left-width: 0;
+    border-right-width: 14px;
+    left: -14px;
+    right: auto;
+}
+
+@media (max-width: 767px)
+{
+    .event:before {
+        border-left-width: 0;
+        border-right-width: 15px;
+        left: -15px;
+        right: auto;
+    }
+    .event:after {
+        border-left-width: 0;
+        border-right-width: 14px;
+        left: -14px;
+        right: auto;
     }
 }
 
-.container .-month-zone
+/* add a center line */
+
+#timeline
 {
-    z-index:-1;
-    border:1px dotted red;
+    position:relative;
+}
+
+#timeline:before
+{
+    top: 0;
+    bottom:0;
+    position: absolute;
+    content: " ";
+    width: 3px;
+    background-color: #000;
+    left: 50%;
+    margin-left: -1.5px;
+}
+
+@media(max-width: 767px)
+{
+    #timeline:before 
+    {
+        left: 30px;
+    }
 }

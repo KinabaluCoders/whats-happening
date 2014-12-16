@@ -5,48 +5,14 @@
     <title>Timeline Development</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- vendor related -->
     <link href="../bootstrap-3.3.1-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../jquery/jquery-2.1.1.min.js"></script>
+
+    <!-- custom -->
+    <link href="timeline.css" rel="stylesheet">
     <style>
-        /* purely styles */
-
-        .event
-        {
-            margin-top:5px;
-            border: 1px solid #d4d4d4;
-            border-radius: 2px;
-            padding: 20px;
-            position: relative;
-            -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
-            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
-        }
-
-        /* add a center line */
-
-        #timeline
-        {
-            position:relative;
-        }
-
-        #timeline:before
-        {
-            top: 0;
-            bottom:0;
-            position: absolute;
-            content: " ";
-            width: 3px;
-            background-color: #000;
-            left: 50%;
-            margin-left: -1.5px;
-        }
-
-        @media(max-width: 767px)
-        {
-            #timeline:before 
-            {
-                left: 30px;
-            }
-        }
-
         /* debug (bootstrap) */
 
         .debug-bootstrap div
@@ -72,101 +38,9 @@
         {
             display:block
         }
-
-        /* pull the first column either left or right */
-
-        .row:nth-child(2n+1) .column:nth-child(1) div,
-        .row:nth-child(2n) .column:nth-child(1),
-        .row:nth-child(2n) .column:nth-child(2) div
-        {
-            float:right;
-        }
-        .row:nth-child(2n) .column:nth-child(1) div
-        {
-            float:left;
-        }
     </style>
-    <script src="../jquery/jquery-2.1.1.min.js"></script>
     <script src="debug.generator-functions.js"></script>
-    <script type="text/javascript">
-
-    jQuery(document).ready(function($){
-        var $timeline = $('#timeline');
-
-        function add_event(event)
-        {
-            update_row(event);
-        }
-
-        function update_row(event)
-        {
-            $row = $timeline.find('.row[data-day="' + event.segment + '"]');
-            if($row.length <= 0)
-            {
-                $row = $('<div class="row" data-day="' + event.segment + '"></div>');
-
-                $timeline.append($row);
-            }
-
-            $columns = $row.find(".column"); // max: 2 .column per .row
-            $subcolumns = $row.find(".subcolumn"); // max: 4 .subcolumn per .row, 2 .subcolumn / .column
-            $events = $row.find(".event"); // unlimited, added into subcolumn[++]: 0 1 2 3 0
-            subcolumn_no = $events.length % 4;
-            column_no = $events.length % 2;
-
-            console.log(column_no, subcolumn_no);
-
-            if(!$columns[column_no])
-            {
-                // create column if not found
-                var $column = new_column();
-                $columns.push($column)
-                $row.append($column);
-            }
-
-            if(!$subcolumns[subcolumn_no])
-            {
-                // create subcolumn if not found
-                var $subcolumn = new_subcolumn();
-                $subcolumns.push($subcolumn);
-                $($columns[column_no]).append($subcolumn);
-            }
-
-            $($subcolumns[subcolumn_no]).append(new_event(event)); 
-        }
-
-        function new_column()
-        {
-            // columns contain sub-columns
-            $column = $('<div class="column col-xs-offset-1 col-xs-11 col-sm-offset-0 col-sm-6 col-md-6"></div>');
-            return $column;
-        }
-
-        function new_subcolumn()
-        {
-            // subcolumns contain stackable events
-            $subcolumn = $('<div class="subcolumn col-xs-12 col-sm-12 col-md-6"></div>');
-            return $subcolumn;
-        }
-
-        function new_event(event)
-        {
-            $event = $('<div class="event col-xs-12 col-sm-12 col-md-12">' + event.title + ' (' + event.Date.toString() + ')</div>');
-            return $event;
-        }
-
-        $("#add-event").click(function(e){
-            var event =
-            {
-                Date: debugGenerate_randomDate(new Date(2014, 11, 01), new Date(2015, 06, 01)),
-                segment: debugGenerate_randomInteger(1, 3),
-                title: debugGenerate_loremIpsum(30, 10)
-            };
-            add_event(event);
-        });
-    });
-
-    </script>
+    <script src="timeline.js"></script>
 </head>
 <body>
 

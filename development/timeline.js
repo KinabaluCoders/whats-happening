@@ -1,97 +1,77 @@
-$(document).ready(function() {
-    var $container = $("#basic");
+jQuery(document).ready(function($){
 
-    function initialise_shapeshift()
+var $timeline = $('#timeline');
+
+function add_event(event)
+{
+    update_row(event);
+}
+
+function update_row(event)
+{
+    $row = $timeline.find('.row[data-day="' + event.segment + '"]');
+    if($row.length <= 0)
     {
-        $container.shapeshift({
-            selector: ".item",
-            animated: true,
-            enableDrag: false,
-            enableCrossDrop: false,
-            gutterX: 0,
-            gutterY: 0,
-            paddingX: 0,
-            paddingY: 0,
-            align: "center"
-        })
+        $row = $('<div class="row" data-day="' + event.segment + '"></div>');
+
+        $timeline.append($row);
     }
 
-    function render_months()
+    $columns = $row.find(".column"); // max: 2 .column per .row
+    $subcolumns = $row.find(".subcolumn"); // max: 4 .subcolumn per .row, 2 .subcolumn / .column
+    $events = $row.find(".event"); // unlimited, added into subcolumn[++]: 0 1 2 3 0
+    subcolumn_no = $events.length % 4;
+    column_no = $events.length % 2;
+
+    console.log(column_no, subcolumn_no);
+
+    if(!$columns[column_no])
     {
-        console.log('rendering months...');
-
-        $container.find(".-month-zone").remove();
-
-        var markers = $container.find(".-month-marker");
-
-        zones = [];
-        for(var i=1; i < markers.length; i++)
-        {
-            var $prev_marker = $(markers[i-1]);
-            var $marker = $(markers[i]);
-
-            // console.log($prev_marker.position(), $marker.position());
-
-            zones.push([$prev_marker.position().top, $marker.position().top - $prev_marker.position().top]);
-        }
-        zones.push([$marker.position().top, $container.innerHeight() - $marker.position().top]);
-
-        for(var i=0; i < zones.length; i++)
-        {
-            // console.log(zones[i]);
-
-            var zone = $('<div class="-month-zone"></div>');
-            zone.css({
-                "position": "absolute",
-                "top": zones[i][0] + "px",
-                "height": zones[i][1] + "px",
-                "left" : "0px",
-                "width" : "100%"
-            });
-
-            zone.appendTo($container)
-        }
+        // create column if not found
+        var $column = new_column();
+        $columns.push($column)
+        $row.append($column);
     }
 
-    // source: http://davidwalsh.name/javascript-debounce-function
-    function debounce(func, wait, immediate) {
-        var timeout;
-        return function() {
-            var context = this, args = arguments;
-            var later = function() {
-                timeout = null;
-                if (!immediate) func.apply(context, args);
-            };
-            var callNow = immediate && !timeout;
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-            if (callNow) func.apply(context, args);
-        };
+    if(!$subcolumns[subcolumn_no])
+    {
+        // create subcolumn if not found
+        var $subcolumn = new_subcolumn();
+        $subcolumns.push($subcolumn);
+        $($columns[column_no]).append($subcolumn);
+    }
+
+    $($subcolumns[subcolumn_no]).append(new_event(event)); 
+}
+
+function new_column()
+{
+    // columns contain sub-columns
+    $column = $('<div class="column col-xs-offset-1 col-xs-11 col-sm-offset-0 col-sm-6 col-md-6"></div>');
+    return $column;
+}
+
+function new_subcolumn()
+{
+    // subcolumns contain stackable events
+    $subcolumn = $('<div class="subcolumn col-xs-12 col-sm-12 col-md-6"></div>');
+    return $subcolumn;
+}
+
+function new_event(event)
+{
+    $event = $('<div class="event col-xs-12 col-sm-12 col-md-12">' + event.title + ' (' + event.Date.toString() + ')</div>');
+    return $event;
+}
+
+$("#add-event").click(function(e){
+    var event =
+    {
+        Date: debugGenerate_randomDate(new Date(2014, 11, 01), new Date(2015, 06, 01)),
+        segment: debugGenerate_randomInteger(1, 3),
+        title: debugGenerate_loremIpsum(30, 10)
     };
+    add_event(event);
+});
 
-    ratelimited_render_months = debounce(render_months, 500);
-    $container.on("ss-arranged", function(e){
-        ratelimited_render_months();
-    });
-
-    initialise_shapeshift();
-
-    $container.trigger("ss-arranged");
-
-    $("#reset-timeline").click(function(e){
-        $container.trigger("ss-destroy");
-        initialise_shapeshift();
-        return false;
-    });
-
-    $("#randomise-heights").click(function(e){
-        $container.find(".item").each(function(i, item){
-            var $item = $(item);
-            $item.css("height", (Math.random() * (200 - 30) + 30) + "px");
-        });
-        $container.trigger("ss-destroy");
-        initialise_shapeshift();
-        return false;
-    });
-
-})
+});
