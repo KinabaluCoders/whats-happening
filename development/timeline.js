@@ -9,12 +9,37 @@ function add_event(event)
 
 function determine_row(event)
 {
+    // seek existing segment
     var $row = $timeline.find('.row[data-segment="' + event.segment + '"]');
+
     if($row.length <= 0)
     {
+        // create and insert new segment - latest segment first
+
+        $rows = $timeline.find('.row[data-segment]'); // the [attr] skips .reference rows
+
         $row = $('<div class="row" data-segment="' + event.segment + '"></div>');
 
-        $timeline.append($row);
+        _insertBefore = false;
+        for(var i=0; i < $rows.length; i++)
+        {
+            var current_row = $rows[i];
+            var next_segment = $(current_row).attr("data-segment");
+            if(event.segment > next_segment)
+            {
+                _insertBefore = current_row;
+                break;
+            }
+        }
+
+        if(_insertBefore === false)
+        {
+            $row.appendTo($timeline);
+        }
+        else
+        {
+            $row.insertBefore(_insertBefore);
+        }
     }
 
     return $row;
@@ -74,15 +99,21 @@ function new_event(event)
     return $event;
 }
 
+function segment_from_event(event)
+{
+    var theDate = event.Date;
+    return (theDate.getFullYear() * 100) + theDate.getMonth(); // XXX: produces YYYYMM as integer
+}
+
 $("#add-event").click(function(e){
     var event_date = debugGenerate_randomDate(new Date(2014, 11, 01), new Date(2015, 06, 01));
-    var event_segment = event_date.getFullYear() + "-" + event_date.getMonth();
     var event =
     {
         Date: event_date,
-        segment: event_segment,
+        segment: false,
         title: debugGenerate_loremIpsum(20, 3)
     };
+    event.segment = segment_from_event(event);
     add_event(event);
 });
 
