@@ -129,19 +129,18 @@ function update_row(event)
 
     var $event = new_event(event);
 
-    var position = -1; // default: append event
-    var type = 'append';
-
+    var _insert = false;
     var $events = list_events($row);
     for(var i=0; i < $events.length; i++)
     {
         var current_event = $events[i];
         if(event.Date > $(current_event).data("event").Date)
         {
+            // insert immediately, then shift all proceeding events by 1
+
             console.log("inserting new event at position", i, $event)
-            position = i;
-            type = 'append';
-            attach_event($row, $event, position, type);
+            attach_event($row, $event, i, 'append');
+
             for(j=i; j < $events.length; j++)
             {
                 var shifted_position = j+1;
@@ -149,11 +148,17 @@ function update_row(event)
                 console.log("shifting forward to position", shifted_position, shifted_event);
                 attach_event($row, $(shifted_event), shifted_position, 'append');
             }
-            return; //XXX: refactor!
+
+            _insert = true;
+            break;
         }
     }
 
-    attach_event($row, $event, position, type);
+    if(!_insert)
+    {
+        // DEV: adding older items are slowest, as it must scan the entire event list
+        attach_event($row, $event, -1, 'append');
+    }
 }
 
 function new_column()
