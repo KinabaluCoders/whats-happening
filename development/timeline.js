@@ -2,6 +2,8 @@ jQuery(document).ready(function($){
 
 var $timeline = $('#timeline');
 
+// sets column-subcolumn distribution of events
+//  most apparently for 4-col timelines
 var insertion_sequence = [
     [0, 0],
     [1, 0],
@@ -26,9 +28,8 @@ function determine_row(event)
         $rows = $timeline.find('.row[data-segment]'); // the [attr] skips .reference rows
 
         $row = $('<div class="row" data-segment="' + event.segment + '"></div>');
-        $row.data("events", []);
 
-        _insertBefore = false;
+        var _insertBefore = false;
         for(var i=0; i < $rows.length; i++)
         {
             var current_row = $rows[i];
@@ -89,25 +90,32 @@ function attach_event($row, $event, position)
 
 function list_events($row)
 {
-    var events = [ 
-        $row.find(".column:nth-child(1) .subcolumn:nth-child(1) .event"), 
-        $row.find(".column:nth-child(2) .subcolumn:nth-child(1) .event"), 
-        $row.find(".column:nth-child(1) .subcolumn:nth-child(2) .event"), 
-        $row.find(".column:nth-child(2) .subcolumn:nth-child(2) .event")
-    ];
+    var events_count = 0;
+    var subcolumn_events = [];
+    var subcolumn_counters = [];
+    var ordered_events = [];
 
-    var total_events = events[0].length + events[1].length + events[2].length + events[3].length;
-    var chronology = [];
-    var counters = [0, 0, 0, 0];
-
-    for(var i=0; i < total_events; i++)
+    for(var i=0; i < insertion_sequence.length; i++)
     {
-        var column_no = i % 4;
-        chronology.push(events[column_no][counters[column_no]]);
-        counters[column_no]++;
+        var column_nchild = insertion_sequence[i][0] + 1;
+        var subcolumn_nchild = insertion_sequence[i][1] + 1;
+        subcolumn_events[i] = $row.find(".column:nth-child(" + column_nchild + ") .subcolumn:nth-child(" + subcolumn_nchild + ") .event");
+        events_count += subcolumn_events[i].length;
+
+        subcolumn_counters[i] = 0;
     }
 
-    return chronology;
+    for(var i=0; i < events_count; i++)
+    {
+        var current_sequence = i % 4;
+        var subcolumn_child = subcolumn_counters[current_sequence];
+
+        ordered_events.push(subcolumn_events[current_sequence][subcolumn_child]);
+
+        subcolumn_counters[current_sequence]++;
+    }
+
+    return ordered_events;
 }
 
 function update_row(event)
@@ -125,14 +133,15 @@ function update_row(event)
         {
             // insert immediately, then shift all proceeding events by 1
 
-            console.log("inserting new event at position", i, $event)
+            // console.log("inserting new event at position", i, $event)
             attach_event($row, $event, i);
 
             for(j=i; j < $events.length; j++)
             {
                 var shifted_position = j+1;
                 var shifted_event = $events[j];
-                console.log("shifting forward to position", shifted_position, shifted_event);
+
+                // console.log("shifting forward to position", shifted_position, shifted_event);
                 attach_event($row, $(shifted_event), shifted_position);
             }
 
@@ -162,9 +171,12 @@ function new_subcolumn()
     return $subcolumn;
 }
 
+var _event_counter = 0;
+
 function new_event(event)
 {
     $event = $('<div class="event col-xs-12 col-sm-12 col-md-12"></div>').data("event", event).hide();
+    $event.attr("id", "-event-" + _event_counter++);
     $event.append($('<div class="arrow-line visible-md-block visible-lg-block"></div>'));
     $event.append($('<div class="timeline-icon"><span class="glyphicon glyphicon-star-empty"></span></div>'));
     $event.append($('<b style="font-size:2.0em; float:left; margin-right:3px;">' /*+ event.Date.getMonth() + "/" */+ event.Date.getDate() + "</b>"));
