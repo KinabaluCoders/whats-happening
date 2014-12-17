@@ -26,6 +26,7 @@ function determine_row(event)
         $rows = $timeline.find('.row[data-segment]'); // the [attr] skips .reference rows
 
         $row = $('<div class="row" data-segment="' + event.segment + '"></div>');
+        $row.data("events", []);
 
         _insertBefore = false;
         for(var i=0; i < $rows.length; i++)
@@ -52,7 +53,7 @@ function determine_row(event)
     return $row;
 }
 
-function attach_event($row, $event, position, type)
+function attach_event($row, $event, position)
 {
     if(position == -1)
     {
@@ -83,21 +84,7 @@ function attach_event($row, $event, position, type)
         $current_column.append($subcolumn);
     }
     var $current_subcolumn = $($subcolumns[subcolumn_no]);
-
-    if(!type || type == 'append')
-    {
-        console.log("appending", position , "to column", column_no, "subcolumn", subcolumn_no, $event);
-        $current_subcolumn.append($event);
-    }
-    else if(type == 'prepend')
-    {
-        console.log("prepending", position , "to column", column_no, "subcolumn", subcolumn_no, $event);
-        $current_subcolumn.prepend($event);
-    }
-    else
-    {
-        throw new Error("what is that?"); // XXX: better error
-    }
+    $current_subcolumn.append($event);
 }
 
 function list_events($row)
@@ -139,14 +126,14 @@ function update_row(event)
             // insert immediately, then shift all proceeding events by 1
 
             console.log("inserting new event at position", i, $event)
-            attach_event($row, $event, i, 'append');
+            attach_event($row, $event, i);
 
             for(j=i; j < $events.length; j++)
             {
                 var shifted_position = j+1;
                 var shifted_event = $events[j];
                 console.log("shifting forward to position", shifted_position, shifted_event);
-                attach_event($row, $(shifted_event), shifted_position, 'append');
+                attach_event($row, $(shifted_event), shifted_position);
             }
 
             _insert = true;
@@ -157,7 +144,7 @@ function update_row(event)
     if(!_insert)
     {
         // DEV: adding older items are slowest, as it must scan the entire event list
-        attach_event($row, $event, -1, 'append');
+        attach_event($row, $event, -1);
     }
 }
 
