@@ -14,20 +14,21 @@ var insertion_sequence = [
 function add_event(event)
 {
     update_row(event);
+    update_segment_dividers();
 }
 
 function determine_row(event)
 {
     // seek existing segment
-    var $row = $timeline.find('.row[data-segment="' + event.segment + '"]');
+    var $row = $timeline.find('.row.segment[data-segment="' + event.segment + '"]');
 
     if($row.length <= 0)
     {
         // create and insert new segment - latest segment first
 
-        $rows = $timeline.find('.row[data-segment]'); // the [attr] skips .reference rows
+        $rows = $timeline.find('.row.segment[data-segment]'); // the [attr] skips .reference rows
 
-        $row = $('<div class="row" data-segment="' + event.segment + '"></div>');
+        $row = $('<div class="row segment" data-segment="' + event.segment + '"></div>');
 
         var _insertBefore = false;
         for(var i=0; i < $rows.length; i++)
@@ -157,6 +158,74 @@ function update_row(event)
     }
 }
 
+function update_segment_dividers()
+{
+    var $prev_segment = false;
+    var Segments = $timeline.find(".segment");
+    for(var i=0; i < Segments.length; i++)
+    {
+        var $segment = $(Segments[i]);
+        var $next_segment = false;
+
+        if(i < (Segments.length - 1))
+        {
+            $next_segment = $(Segments[i+1]);
+        }
+        else
+        {
+            $next_segment = false;
+        }
+
+        var _boundary = {
+            "signature" : "unknown",
+            "title" : "unknown"
+        };
+
+        if($prev_segment == false)
+        {
+            _boundary.title = "START";
+            _boundary.signature = "start";
+
+            $timeline.prepend(the_boundary(_boundary));
+        }
+
+        if($next_segment == false)
+        {
+            _boundary.title = "END";
+            _boundary.signature = "end";
+
+            $timeline.append(the_boundary(_boundary));
+        }
+        else
+        {
+            _boundary.title = "AFTER " + $segment.attr("data-segment");
+            _boundary.signature = "after-" + $segment.attr("data-segment");
+
+            the_boundary(_boundary).insertBefore($next_segment);
+        }
+
+        $prev_segment = $segment;
+    }
+}
+
+function the_boundary(_boundary)
+{
+    var $boundary = false;
+
+    var existing = $timeline.find('.boundary[data-signature="' + _boundary.signature + '"]');
+    if(existing.length <= 0)
+    {
+        $boundary = $('<div class="row boundary" style="background:#eaeaea;"><div class="col-md-12">' + _boundary.title + '</div></div>')
+        $boundary.attr("data-signature", _boundary.signature);
+    }
+    else
+    {
+        $boundary = $(existing.get(0));
+    }
+
+    return $boundary;
+}
+
 function new_column()
 {
     // columns contain sub-columns
@@ -192,7 +261,7 @@ function segment_from_event(event)
 }
 
 $("#add-event").click(function(e){
-    var event_date = debugGenerate_randomDate(new Date(2015, 0, 1), new Date(2015, 0, 20));
+    var event_date = debugGenerate_randomDate(new Date(2015, 0, 1), new Date(2015, 2, 30));
     var event =
     {
         Date: event_date,
