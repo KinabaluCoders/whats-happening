@@ -178,50 +178,64 @@ function update_segment_dividers()
 
         var _boundary = {
             "signature" : "unknown",
-            "title" : "unknown"
+            "prev" : false,
+            "next" : false
         };
 
         if($prev_segment == false)
         {
-            _boundary.title = "START";
-            _boundary.signature = "start";
+            // at the beginning of the timeline
 
-            $timeline.prepend(the_boundary(_boundary));
+            _boundary.signature = "start";
+            _boundary.prev = false;
+            _boundary.next = $segment;
+
+            the_boundary(_boundary).prependTo($timeline);
         }
 
         if($next_segment == false)
         {
-            _boundary.title = "END";
-            _boundary.signature = "end";
+            // at the end of the timeline
 
-            $timeline.append(the_boundary(_boundary));
+            _boundary.signature = "end";
+            _boundary.prev = $segment;
+            _boundary.next = false;
+
+            the_boundary(_boundary).appendTo($timeline);
         }
         else
         {
-            _boundary.title = "AFTER " + $segment.attr("data-segment");
+            // in between segments
+
             _boundary.signature = "after-" + $segment.attr("data-segment");
+            _boundary.prev = $segment;
+            _boundary.next = $next_segment;
 
             the_boundary(_boundary).insertBefore($next_segment);
         }
 
         $prev_segment = $segment;
     }
+
+    $timeline.find(".row.boundary").trigger("refresh");
 }
 
 function the_boundary(_boundary)
 {
     var $boundary = false;
 
-    var existing = $timeline.find('.boundary[data-signature="' + _boundary.signature + '"]');
+    var existing = $timeline.find('.row.boundary[data-signature="' + _boundary.signature + '"]');
     if(existing.length <= 0)
     {
-        $boundary = $('<div class="row boundary" style="background:#eaeaea;"><div class="col-md-12">' + _boundary.title + '</div></div>')
+        $boundary = $('<div class="row boundary" style="background:#eaeaea;"><div class="col-md-12"><h3>unknown</h3></div></div>')
         $boundary.attr("data-signature", _boundary.signature);
     }
     else
     {
         $boundary = $(existing.get(0));
     }
+
+    $boundary.data("boundary", _boundary);
 
     return $boundary;
 }
@@ -259,6 +273,33 @@ function segment_from_event(event)
     var theDate = event.Date;
     return (theDate.getFullYear() * 100) + theDate.getMonth(); // XXX: produces YYYYMM as integer
 }
+
+// custom rendering functions for segment boundaries
+$timeline.on("refresh", ".row.boundary",function(e){
+    var $boundary = $(this);
+
+    var _boundary = $boundary.data("boundary");
+
+    var _title = "";
+    if(_boundary.prev)
+    {
+        _title += "previous: " + _boundary.prev.attr("data-segment") + " ";
+    }
+    else
+    {
+        _title += "LATEST ";
+    }
+    if(_boundary.next)
+    {
+        _title += "next: " + _boundary.next.attr("data-segment") + " ";
+    }
+    else
+    {
+        _title += "OLDEST ";
+    }
+
+    $boundary.find("h3").text(_title);
+});
 
 $("#add-event").click(function(e){
     var event_date = debugGenerate_randomDate(new Date(2015, 0, 1), new Date(2015, 2, 30));
