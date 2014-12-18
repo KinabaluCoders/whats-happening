@@ -261,7 +261,7 @@ function segment_from_event(event)
 }
 
 $("#add-event").click(function(e){
-    var event_date = debugGenerate_randomDate(new Date(2015, 0, 1), new Date(2015, 2, 30));
+    var event_date = debugGenerate_randomDate(new Date(2015, 0, 1), new Date(2015, 0, 31));
     var event =
     {
         Date: event_date,
