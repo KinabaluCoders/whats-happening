@@ -272,8 +272,4 @@ $("#add-event").click(function(e){
     add_event(event);
 });
 
-$("#list-events").click(function(e){
-    console.log(list_events($('#timeline .row:not(.reference)')))
-});
-
 });
