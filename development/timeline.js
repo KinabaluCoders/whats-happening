@@ -260,7 +260,8 @@ function segment_from_event(event)
     return (theDate.getFullYear() * 100) + theDate.getMonth(); // XXX: produces YYYYMM as integer
 }
 
-$("#add-event").click(function(e){
+function debug_add_random_event()
+{
     var event_date = debugGenerate_randomDate(new Date(2015, 0, 1), new Date(2015, 0, 31));
     var event =
     {
@@ -270,6 +271,24 @@ $("#add-event").click(function(e){
     };
     event.segment = segment_from_event(event);
     add_event(event);
+}
+
+$("#add-event").click(function(e){
+    debug_add_random_event();
 });
+
+debug_add_random_event();
+debug_add_random_event();
+debug_add_random_event();
+debug_add_random_event();
+debug_add_random_event();
+debug_add_random_event();
+debug_add_random_event();
+debug_add_random_event();
+debug_add_random_event();
+debug_add_random_event();
+debug_add_random_event();
+debug_add_random_event();
+debug_add_random_event();
 
 });
