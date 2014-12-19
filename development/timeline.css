@@ -1,12 +1,12 @@
 /* pull the first column either left or right */
 
-.row:nth-child(2n+1) .column:nth-child(1) div,
-.row:nth-child(2n) .column:nth-child(1),
-.row:nth-child(2n) .column:nth-child(2) div
+.row:nth-child(2n) .column:nth-child(1) div,
+.row:nth-child(2n+1) .column:nth-child(1),
+.row:nth-child(2n+1) .column:nth-child(2) div
 {
     float:right;
 }
-.row:nth-child(2n) .column:nth-child(1) div
+.row:nth-child(2n+1) .column:nth-child(1) div
 {
     float:left;
 }
@@ -57,23 +57,23 @@
 /*
     point css arrow left for events on right side of large screens 
 
-    .row:nth-child(2n+1) .column:nth-child(2)
+    .row:nth-child(2n) .column:nth-child(2)
         rows: 1,3,5,... column 2 (visually events on right side)
 
-    .row:nth-child(2n) .column:nth-child(1)
+    .row:nth-child(2n+1) .column:nth-child(1)
         rows: 2,4,6,... column 1 (visually events on right side)
 */
 
-.row:nth-child(2n+1) .column:nth-child(2) .event:before,
-.row:nth-child(2n) .column:nth-child(1) .event:before
+.row:nth-child(2n) .column:nth-child(2) .event:before,
+.row:nth-child(2n+1) .column:nth-child(1) .event:before
 {
     border-left-width: 0;
     border-right-width: 15px;
     left: -15px;
     right: auto;
 }
-.row:nth-child(2n+1) .column:nth-child(2) .event:after,
-.row:nth-child(2n) .column:nth-child(1) .event:after
+.row:nth-child(2n) .column:nth-child(2) .event:after,
+.row:nth-child(2n+1) .column:nth-child(1) .event:after
 {
     border-left-width: 0;
     border-right-width: 14px;
@@ -125,8 +125,8 @@
     z-index:-1;
 }
 
-.row:nth-child(2n+1) .column:nth-child(2) .arrow-line,
-.row:nth-child(2n) .column:nth-child(1) .arrow-line
+.row:nth-child(2n) .column:nth-child(2) .arrow-line,
+.row:nth-child(2n+1) .column:nth-child(1) .arrow-line
 {
     /* right event to center timeline */
 
@@ -192,8 +192,8 @@
     margin-left:16px;
 }
 
-.row:nth-child(2n+1) .column:nth-child(2) .timeline-icon,
-.row:nth-child(2n) .column:nth-child(1) .timeline-icon
+.row:nth-child(2n) .column:nth-child(2) .timeline-icon,
+.row:nth-child(2n+1) .column:nth-child(1) .timeline-icon
 {
     /* timeline-icons on right side of timeline show timeline-icons on left */
 
@@ -221,8 +221,8 @@
     }
 
     /* all timeline-icons on far left of medium and up  */
-    .row:nth-child(2n) .column:nth-child(2) .subcolumn:nth-child(2) .timeline-icon,
-    .row:nth-child(2n+1) .column:nth-child(1) .subcolumn:nth-child(2) .timeline-icon
+    .row:nth-child(2n+1) .column:nth-child(2) .subcolumn:nth-child(2) .timeline-icon,
+    .row:nth-child(2n) .column:nth-child(1) .subcolumn:nth-child(2) .timeline-icon
     {
         left:200%;
         right:auto;
@@ -231,8 +231,8 @@
     }
 
     /* all timeline-icons on far right of medium and up  */
-    .row:nth-child(2n+1) .column:nth-child(2) .subcolumn:nth-child(2) .timeline-icon,
-    .row:nth-child(2n) .column:nth-child(1) .subcolumn:nth-child(2) .timeline-icon
+    .row:nth-child(2n) .column:nth-child(2) .subcolumn:nth-child(2) .timeline-icon,
+    .row:nth-child(2n+1) .column:nth-child(1) .subcolumn:nth-child(2) .timeline-icon
     {
         left:auto;
         right:200%;
