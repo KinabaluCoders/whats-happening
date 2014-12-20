@@ -145,7 +145,7 @@ var _event_counter = 0;
 
 function new_cell(event)
 {
-    $cell = $('<div class="cell col-xs-offset-1 col-xs-11 col-sm-6 col-md-3" style="border:1px dotted black">');
+    $cell = $('<div class="cell col-xs-offset-1 col-xs-11 col-sm-offset-0 col-sm-6 col-md-3" style="border:1px dotted black">');
     $cell.attr("id", "-cell-" + _event_counter++);
     $cell.data("event", event);
 
@@ -190,6 +190,8 @@ var layout_configurations = [
     }
 ];
 
+// track which bootstrap classes are applied to the element
+
 function arrange_events($row)
 {
     var $cells = $row.find(".cell");
@@ -229,6 +231,7 @@ function arrange_events($row)
         for(var j=0; j < $cells.length; j++)
         {
             var $cell = $($cells[j]);
+            var cell_id = $cell.attr("id");
             var cell_height = $cell.outerHeight();
 
             // iterate through each height stack and find the smallest
@@ -256,14 +259,27 @@ function arrange_events($row)
             // add to the height stack
             height_stacks[candidate_stack] += cell_height;
 
-            // XXX: apply styling
-            css_text.push("#" + $cell.attr("id"));
+            // apply absolute styles into the page header
+
+            css_text.push("#" + cell_id);
             css_text.push("{");
             css_text.push("position: absolute;");
             css_text.push("top: " + cell_top + "px;");
             css_text.push("}");
 
-            $cell.addClass("col-" + layout_config.bootstrap["size"] + "-offset-" + (layout_config.bootstrap["column-multiplier"] * cell_column_enumeration));
+            // remove previous offsets for this size class
+            var _candidate_classes = [];
+            for(var k=0; k < 12; k+= layout_config.bootstrap["column-multiplier"])
+            {
+                _candidate_classes.push("col-" + layout_config.bootstrap["size"] + "-offset-" + k);
+            }
+            $cell.removeClass(_candidate_classes.join(" "));
+
+            // apply offset classes to simulate columns
+
+            bootstrap_offset_class = "col-" + layout_config.bootstrap["size"] + "-offset-" + (layout_config.bootstrap["column-multiplier"] * cell_column_enumeration);
+            $cell.addClass(bootstrap_offset_class);
+
         }
 
         css_text.push("}");
@@ -273,7 +289,9 @@ function arrange_events($row)
 }
 
 $(window).resize(function(e){
-    arrange_events($("#timeline .row.segment"));
+    setTimeout(function(){
+        arrange_events($("#timeline .row.segment"));
+    }, 1000);
 });
 
 function debug_add_random_event()
