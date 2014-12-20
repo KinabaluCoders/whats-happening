@@ -234,7 +234,7 @@ function arrange_events($row)
             var cell_id = $cell.attr("id");
             var cell_height = $cell.outerHeight();
 
-            // iterate through each height stack and find the smallest
+            // iterate through each height stack and find the "lowest" height
             var candidate_stack = -1;
             var minimum_height = -1;
             for(var k=0; k < layout_config.cols; k++)
@@ -256,16 +256,16 @@ function arrange_events($row)
             var cell_top = height_stacks[candidate_stack];
             var cell_column_enumeration = candidate_stack;
 
-            // add to the height stack
+            // virtually add the cell to the height stack
             height_stacks[candidate_stack] += cell_height;
 
             // apply absolute styles into the page header
 
             css_text.push("#" + cell_id);
-            css_text.push("{");
-            css_text.push("position: absolute;");
-            css_text.push("top: " + cell_top + "px;");
-            css_text.push("}");
+            css_text.push("    {");
+            css_text.push("        position: absolute;");
+            css_text.push("        top: " + cell_top + "px;");
+            css_text.push("    }");
 
             // remove previous offsets for this size class
             var _candidate_classes = [];
