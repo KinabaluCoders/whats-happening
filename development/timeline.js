@@ -6,8 +6,8 @@ var $timeline = $('#timeline');
 //  most apparently for 4-col timelines
 var insertion_sequence = [
     [0, 0],
-    [1, 0],
     [0, 1],
+    [1, 0],
     [1, 1]
 ];
 
@@ -63,7 +63,7 @@ function attach_event($row, $event, position)
         position = $events.length;
     }
 
-    var current_sequence = insertion_sequence[position % 4];
+    var current_sequence = insertion_sequence[position % insertion_sequence.length];
     column_no = current_sequence[0];
     subcolumn_no = current_sequence[1];
 
@@ -108,7 +108,7 @@ function list_events($row)
 
     for(var i=0; i < events_count; i++)
     {
-        var current_sequence = i % 4;
+        var current_sequence = i % insertion_sequence.length;
         var subcolumn_child = subcolumn_counters[current_sequence];
 
         ordered_events.push(subcolumn_events[current_sequence][subcolumn_child]);
@@ -122,6 +122,29 @@ function list_events($row)
 function update_row(event)
 {
     var $row = determine_row(event);
+
+    var $cell = new_cell(event);
+
+    var _insert = false;
+    var $cells = $row.find(".cell");
+    for(var i=0; i < $cells.length; i++)
+    {
+        var current_cell = $cells[i];
+        if(event.Date > $(current_cell).data("event").Date)
+        {
+            $cell.insertBefore(current_cell);
+            _insert = true;
+            break;
+        }
+    }
+    if(!_insert)
+    {
+        $cell.appendTo($row);
+    }
+
+    return true;
+
+    // old insertion code... 
 
     var $event = new_event(event);
 
@@ -252,6 +275,23 @@ function new_event(event)
     $event.append(event.title + ' (' + event.Date.toString() + ', ' + event.segment + ')');
     $event.fadeIn("fast");
     return $event;
+}
+
+function new_cell(event)
+{
+    $cell = $('<div class="cell col-xs-offset-1 col-xs-11 col-sm-offset-0 col-sm-6 col-md-3" style="border:1px dotted black">');
+    $cell.data("event", event);
+
+    $event = $('<div class="event"></div>')
+    $event.attr("id", "-event-" + _event_counter++);
+    $event.append($('<div class="arrow-line visible-md-block visible-lg-block"></div>'));
+    $event.append($('<div class="timeline-icon"><span class="glyphicon glyphicon-star-empty"></span></div>'));
+    $event.append($('<b style="font-size:2.0em; float:left; margin-right:3px;">' /*+ event.Date.getMonth() + "/" */+ event.Date.getDate() + "</b>"));
+    $event.append(event.title + ' (' + event.Date.toString() + ', ' + event.segment + ')');
+
+    $cell.append($event);
+
+    return $cell;
 }
 
 function segment_from_event(event)
