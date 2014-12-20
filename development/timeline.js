@@ -165,6 +165,66 @@ function segment_from_event(event)
     return (theDate.getFullYear() * 100) + theDate.getMonth(); // XXX: produces YYYYMM as integer
 }
 
+var layout_configurations = [
+    { cols:4 }
+];
+
+function arrange_events($row)
+{
+    var $cells = $row.find(".cell");
+
+    for(var i=0; i < layout_configurations.length; i++)
+    {
+        layout_config = layout_configurations[i];
+        console.log("configuring for columns:", layout_config);
+
+        // initialise stacks
+        var height_stacks = [];
+
+        // iterate through each cell/event (should be chronological)
+        for(var j=0; j < $cells.length; j++)
+        {
+            var $cell = $($cells[j]);
+            var cell_height = $cell.outerHeight();
+
+            // iterate through each height stack and find the smallest
+            var candidate_stack = -1;
+            var minimum_height = -1;
+            for(var k=0; k < layout_config.cols; k++)
+            {
+                if(typeof height_stacks[k] == "undefined")
+                {
+                    height_stacks[k] = 0;
+                }
+
+                if(height_stacks[k] < minimum_height || minimum_height == -1)
+                {
+                    // found the lowest stack (or this is first iteration)
+                    minimum_height = height_stacks[k];
+                    candidate_stack = k;
+                }
+            }
+
+            // a stack has been identified
+            var cell_top = height_stacks[candidate_stack];
+            var cell_column_enumeration = candidate_stack;
+
+            // add to the height stack
+            height_stacks[candidate_stack] += cell_height;
+
+            console.log();
+
+            // XXX: apply styling
+            $cell.css({
+                "position" : "absolute",
+                "top" : cell_top + "px"
+            });
+
+            $cell.addClass("col-md-offset-" + (3 * cell_column_enumeration));
+        }
+    }
+}
+
 function debug_add_random_event()
 {
     var event_date = debugGenerate_randomDate(new Date(2015, 0, 1), new Date(2015, 0, 31));
@@ -195,5 +255,7 @@ debug_add_random_event();
 debug_add_random_event();
 debug_add_random_event();
 debug_add_random_event();
+
+arrange_events($("#timeline .row.segment"));
 
 });
