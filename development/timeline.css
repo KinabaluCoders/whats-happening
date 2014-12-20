@@ -27,6 +27,23 @@
     min-height:85px;
 }
 
+.column:nth-child(1) .subcolumn:nth-child(1) .event
+{
+    background:red;
+}
+.column:nth-child(1) .subcolumn:nth-child(2) .event
+{
+    background:green;
+}
+.column:nth-child(2) .subcolumn:nth-child(1) .event
+{
+    background:blue;
+}
+.column:nth-child(2) .subcolumn:nth-child(2) .event
+{
+    background:purple;
+}
+
 /* css arrow */
 
 .event:before
@@ -103,6 +120,8 @@
 
 .arrow-line
 {
+    display:none !important; /* XXX: spoiling debug */
+
     /* default: left event to center timeline */
 
     box-sizing:content-box; /* shocking! */
