@@ -64,6 +64,20 @@
     margin-left:16px;
 }
 
+/* css3 animation */
+
+.cell
+{
+    transition-property: height, top, left, margin-left;
+    transition-duration: 0.5s;
+}
+
+.row
+{
+    transition-property: height;
+    transition-duration: 0.5s;
+}
+
 /* formatting for events on xs screens  */
 @media (max-width: 767px)
 {
