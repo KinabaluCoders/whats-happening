@@ -191,7 +191,6 @@ var layout_configurations = [
     }
 ];
 
-// track which bootstrap classes are applied to the element
 
 function arrange_events($row)
 {
@@ -244,21 +243,47 @@ function arrange_events($row)
 
         console.log("configuring for columns:", layout_config);
 
+        /* layout_configurations.cols 
+            integer
+                implied array(<integer>) containing elements 0 to N-1
+                standard left to right evaluation of each column height
+            array of integer 
+                e.g. [1, 0, 3, 2]
+                explicit evaluation sequence of column heights
+        */
+        var actual_sequence = [];
+        var sequence_length = layout_config.cols;
+        if(typeof sequence_length == "object")
+        {
+            actual_sequence = sequence_length;
+            sequence_length = sequence_length.length;
+        }
+        else if(typeof sequence_length == "number")
+        {
+            for(var j=0; j < sequence_length; j++)
+            {
+                actual_sequence[j] = j;
+            }
+        }
+        console.log("stack sequence:", actual_sequence, "sequence length:", sequence_length);
+
         // initialise stacks
         var height_stacks = [];
 
-        // iterate through each cell/event (should be chronological)
+        // iterate through each cell/event (should be chronological order in DOM)
         for(var j=0; j < $cells.length; j++)
         {
             var $cell = $($cells[j]);
             var cell_id = $cell.attr("id");
             var cell_height = $cell.outerHeight();
 
-            // iterate through each height stack and find the "lowest" height
+            // iterate through each height stack and find the "shortest" height
             var candidate_stack = -1;
             var minimum_height = -1;
-            for(var k=0; k < layout_config.cols; k++)
+            for(var _s=0; _s < sequence_length; _s++)
             {
+                var k = actual_sequence[_s];
+
                 if(typeof height_stacks[k] == "undefined")
                 {
                     height_stacks[k] = 0;
@@ -266,13 +291,13 @@ function arrange_events($row)
 
                 if(height_stacks[k] < minimum_height || minimum_height == -1)
                 {
-                    // found the lowest stack (or this is first iteration)
+                    // found the shortest stack (or this is first iteration)
                     minimum_height = height_stacks[k];
                     candidate_stack = k;
                 }
             }
 
-            // a stack has been identified
+            // the shortest stack has been identified
             var cell_top = height_stacks[candidate_stack];
             var cell_column_enumeration = candidate_stack;
 
