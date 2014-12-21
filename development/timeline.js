@@ -421,19 +421,10 @@ $("#add-event").click(function(e){
     debug_add_random_event();
 });
 
-debug_add_random_event();
-debug_add_random_event();
-debug_add_random_event();
-debug_add_random_event();
-debug_add_random_event();
-debug_add_random_event();
-debug_add_random_event();
-debug_add_random_event();
-debug_add_random_event();
-debug_add_random_event();
-debug_add_random_event();
-debug_add_random_event();
-debug_add_random_event();
+for(var i=0; i < 30; i++)
+{
+    debug_add_random_event();
+}
 
 $(window).resize();
 
