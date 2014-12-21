@@ -181,6 +181,8 @@ var layout_configurations = [
     },
     { 
         "cols": 4,
+        "stackOffsets": [50, 0 ,0 ,0], 
+            // DEV: far-left column will be skipped when evaluated for first time
         "css": {
             "min-width": 992
         },
@@ -214,9 +216,14 @@ function arrange_events($row)
 
         layout_config = layout_configurations[i];
 
-        // build media-query rules
-        //  @media block is redundant, only matching size classes will be generated based on min-width, max-width
+        /*
+            layout_config.css.min-width
+            layout_config.css.max-width
 
+                builds media-query rules
+                XXX: @media block is redundant
+                only matching size classes will be generated based on min-width, max-width
+        */
         var _media_query = [];
         if(layout_config.css["min-width"])
         {
@@ -243,13 +250,14 @@ function arrange_events($row)
 
         console.log("configuring for columns:", layout_config);
 
-        /* layout_configurations.cols 
-            integer
-                implied array(<integer>) containing elements 0 to N-1
-                standard left to right evaluation of each column height
-            array of integer 
-                e.g. [1, 0, 3, 2]
-                explicit evaluation sequence of column heights
+        /*
+            layout_config.cols 
+                integer
+                    implied array(<integer>) containing elements 0 to N-1
+                    standard left to right evaluation of each column height
+                array of integers 
+                    e.g. [1, 0, 3, 2]
+                    explicit evaluation sequence of column heights
         */
         var actual_sequence = [];
         var sequence_length = layout_config.cols;
@@ -284,9 +292,23 @@ function arrange_events($row)
             {
                 var k = actual_sequence[_s];
 
+                // initialise specific stack if it doesn't exist yet
                 if(typeof height_stacks[k] == "undefined")
                 {
-                    height_stacks[k] = 0;
+                    var initial_height = 0;
+
+                    /* 
+                        layout_config.stackOffsets 
+                            array of integers
+                                e.g. [0, 20, 40, 60]
+                                add height offsets when initialising the stacks
+                    */
+                    if(layout_config.stackOffsets)
+                        if(layout_config.stackOffsets[k])
+                            initial_height = layout_config.stackOffsets[k];
+
+                    height_stacks[k] = initial_height;
+                    console.log(k, height_stacks[k]);
                 }
 
                 if(height_stacks[k] < minimum_height || minimum_height == -1)
