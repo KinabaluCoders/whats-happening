@@ -394,15 +394,15 @@ function debounce(func, wait, immediate)
     };
 };
 
-$(window).resize(
-    debounce(function(){
-        console.log("arranging...");
-        $("#timeline .row.segment").each(function(i, segment){
-            console.log(segment);
-            arrange_events($(segment));
-        });
-    }, 100)
-);
+var ratelimited_arrange = debounce(function(){
+    console.log("arranging...");
+    $("#timeline .row.segment").each(function(i, segment){
+        arrange_events($(segment));
+    });
+}, 100);
+
+
+$(window).resize(ratelimited_arrange);
 
 function debug_add_random_event()
 {
@@ -415,6 +415,7 @@ function debug_add_random_event()
     };
     event.segment = segment_from_event(event);
     add_event(event);
+    ratelimited_arrange();
 }
 
 $("#add-event").click(function(e){
