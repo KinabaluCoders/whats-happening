@@ -221,7 +221,7 @@ function arrange_events($row)
         {
             _media_query.push("max-width: " + layout_config.css["max-width"] + "px");
         }
-        css_text.push("@media (" + _media_query.join(" and ") + ")");
+        css_text.push("@media (" + _media_query.join(") and (") + ")");
         css_text.push("{"); 
 
         // initialise stacks
