@@ -421,7 +421,7 @@ $("#add-event").click(function(e){
     debug_add_random_event();
 });
 
-for(var i=0; i < 30; i++)
+for(var i=0; i < 100; i++)
 {
     debug_add_random_event();
 }

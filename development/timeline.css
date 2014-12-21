@@ -80,6 +80,32 @@
     margin-left:17px;
 }
 
+/* lines that extend from far columns to center */
+
+.arrow-line
+{
+    /* default: left event to center timeline */
+
+    box-sizing:content-box; /* shocking! */
+
+    top:4px;
+    position: absolute;
+    height: 1px;
+    background: #ccc;
+    width: 100%;
+    margin-top: 20px;
+
+    left: 100%;
+    right: auto;
+
+    margin-left: 15px;
+    margin-right: auto;
+    border:0;
+    border-right:36px solid #ccc;
+
+    z-index:-1;
+}
+
 /* css3 animation */
 
 .cell
@@ -158,6 +184,35 @@
 /* formatting for events on md screens (and larger) */
 @media (min-width: 992px)
 {
+    /* 
+    EVENT/PANEL WIDTH ADJUSTMENTS 
+    adjust the margins to keep all widths identical
+    */
+
+    .row .cell.col-md-offset-0 .event {
+        margin-left:15px;
+        margin-right:0px;
+    }
+
+    .row .cell.col-md-offset-3 .event {
+        margin-left:0px;
+        margin-right:15px;
+    }
+
+    .row .cell.col-md-offset-6 .event {
+        margin-left:15px;
+        margin-right:0px;
+    }
+
+    .row .cell.col-md-offset-9 .event {
+        margin-left:0px;
+        margin-right:15px;
+    }
+
+    /* 
+    EVENT/PANEL CSS ARROWS
+    */
+
     /* left columns (2): event arrow and icon on right (default) */
 
     /* right-columns (2): event arrow on left */
@@ -179,27 +234,36 @@
         right: auto;
     }
 
-    /* adjust the margins to keep all widths identical */
+    /*
+    ARROW LINES
+    extends from css .arrows on far-left and far-right columns to center line
+    */
 
-    .row .cell.col-md-offset-0 .event {
-        margin-left:15px;
-        margin-right:0px;
+    .row .cell.col-md-offset-3 .arrow-line,
+    .row .cell.col-md-offset-6 .arrow-line
+    {
+        /* 
+        overrides bootstrap !important
+        turns off arrow lines on events nearest to timeline (col 1 and 3)
+        */
+        display:none !important; 
     }
 
-    .row .cell.col-md-offset-3 .event {
-        margin-left:0px;
+    .row .cell.col-md-offset-9 .arrow-line
+    {
+        left: auto;
+        right: 100%;
+
+        margin-left:auto;
         margin-right:15px;
+        border:0;
+        border-left:36px solid #ccc;
     }
 
-    .row .cell.col-md-offset-6 .event {
-        margin-left:15px;
-        margin-right:0px;
-    }
-
-    .row .cell.col-md-offset-9 .event {
-        margin-left:0px;
-        margin-right:15px;
-    }
+    /*
+    TIMELINE ICONS (CENTER)
+    .arrow and .arrow-line pointing at this on timeline
+    */
 
     /* far-left column (1/4): icon in center */
 
@@ -229,57 +293,6 @@
         margin-left:0;
         margin-right:51px;
     }
-}
-
-/* css arrows "detached" from the timeline (far left/right on large screens), add long line */
-
-.arrow-line
-{
-    display:none !important; /* XXX: spoiling debug */
-
-    /* default: left event to center timeline */
-
-    box-sizing:content-box; /* shocking! */
-
-    top:0px;
-    position: absolute;
-    height: 1px;
-    background: #ccc;
-    width: 100%;
-    margin-top: 20px;
-
-    left: 100%;
-    right: auto;
-
-    margin-left: 15px;
-    margin-right: auto;
-    border:0;
-    border-right:35px solid #ccc;
-
-    z-index:-1;
-}
-
-.row:nth-child(2n) .column:nth-child(2) .arrow-line,
-.row:nth-child(2n+1) .column:nth-child(1) .arrow-line
-{
-    /* right event to center timeline */
-
-    left: auto;
-    right: 100%;
-
-    margin-left:auto;
-    margin-right:15px;
-    border:0;
-    border-left:35px solid #ccc;
-}
-
-.subcolumn:nth-child(1) .event .arrow-line
-{
-    /* 
-    overrides bootstrap !important
-    turns off arrow lines on events closest to timeline (col 1 and 3)
-    */
-    display:none !important; 
 }
 
 /* add a center line */
