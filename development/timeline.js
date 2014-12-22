@@ -153,10 +153,14 @@ function new_cell(event)
     $event.attr("id", "-event-" + _event_counter++);
     $event.append($('<div class="arrow-line visible-md-block visible-lg-block"></div>'));
     $event.append($('<div class="timeline-icon"><span class="glyphicon glyphicon-star-empty"></span></div>'));
-    $event.append($('<b style="font-size:2.0em; float:left; margin-right:3px;">' /*+ event.Date.getMonth() + "/" */+ event.Date.getDate() + "</b>"));
-    $event.append(event.title + ' ');
-    // $event.append(event.Date.toString() + ', ' + event.segment + ')');
 
+    $content = $('<div class="content"></div>');
+
+    // $content.append($('<b style="font-size:2.0em; float:left; margin-right:3px;">' /*+ event.Date.getMonth() + "/" */+ event.Date.getDate() + "</b>"));
+    $content.append(event.title + ' ');
+    // $content.append(event.Date.toString() + ', ' + event.segment + ')');
+
+    $event.append($content);
     $cell.append($event);
 
     return $cell;
@@ -423,7 +427,7 @@ $("#add-event").click(function(e){
     debug_add_random_event();
 });
 
-for(var i=0; i < 100; i++)
+for(var i=0; i < 50; i++)
 {
     debug_add_random_event();
 }
