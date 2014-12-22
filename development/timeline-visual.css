@@ -1,3 +1,21 @@
+.row.boundary
+{
+    margin-top:20px;
+    margin-bottom:20px;
+    text-align:center;
+
+    background:black;
+    color:white;
+}
+.row.boundary:first-child
+{
+    margin-top:0;
+}
+.row.boundary:last-child
+{
+    margin-bottom:0;
+}
+
 .event
 {
     padding:10px;

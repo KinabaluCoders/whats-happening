@@ -129,7 +129,7 @@ function the_boundary(_boundary)
     var existing = $timeline.find('.boundary[data-signature="' + _boundary.signature + '"]');
     if(existing.length <= 0)
     {
-        $boundary = $('<div class="row boundary" style="background:#eaeaea;"><div class="col-md-12">' + _boundary.title + '</div></div>')
+        $boundary = $('<div class="row boundary"><div class="col-md-12">' + _boundary.title + '</div></div>')
         $boundary.attr("data-signature", _boundary.signature);
     }
     else
