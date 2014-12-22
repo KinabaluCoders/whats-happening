@@ -152,7 +152,7 @@ function new_cell(event)
     $event = $('<div class="event"></div>')
     $event.attr("id", "-event-" + _event_counter++);
     $event.append($('<div class="arrow-line visible-md-block visible-lg-block"></div>'));
-    $event.append($('<div class="timeline-icon"><span class="glyphicon glyphicon-star-empty"></span></div>'));
+    $event.append($('<div class="timeline-icon">' + event.Date.getDate() + '</div>'));
 
     $content = $('<div class="content"></div>');
 
