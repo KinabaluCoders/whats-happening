@@ -100,7 +100,9 @@ function update_segment_dividers()
             _boundary.title = "START";
             _boundary.signature = "start";
 
-            $timeline.prepend(the_boundary(_boundary));
+            the_boundary(_boundary)
+                .prependTo($timeline)
+                .trigger("updated.timelineBoundary");
         }
 
         if($next_segment == false)
@@ -108,14 +110,18 @@ function update_segment_dividers()
             _boundary.title = "END";
             _boundary.signature = "end";
 
-            $timeline.append(the_boundary(_boundary));
+            the_boundary(_boundary)
+                .appendTo($timeline)
+                .trigger("updated.timelineBoundary");
         }
         else
         {
             _boundary.title = "AFTER " + $segment.attr("data-segment");
             _boundary.signature = "after-" + $segment.attr("data-segment");
 
-            the_boundary(_boundary).insertBefore($next_segment);
+            the_boundary(_boundary)
+                .insertBefore($next_segment)
+                .trigger("updated.timelineBoundary");
         }
 
         $prev_segment = $segment;
@@ -480,6 +486,11 @@ $("#timeline")
 
         $row.addClass("-layout-finalised");
         group_markers($row, ["color1", "color2", "color3", "color4"]);
+    })
+    .on("updated.timelineBoundary", ".row.boundary", function(e){
+        var $row = $(this);
+
+        $row.css("background-color", "red");
     });
 
 
