@@ -43,6 +43,12 @@
     border-right: 0 solid #ccc;
     border-bottom: 15px solid transparent;
     content: " ";
+    z-index:-1;
+
+    opacity:0;
+    transition-property: opacity;
+    transition-duration: 0.5s;
+    transition-delay:0.5s;
 }
 .event:after
 {
@@ -55,6 +61,11 @@
     border-right: 0 solid #fff;
     border-bottom: 14px solid transparent;
     content: " ";
+
+    opacity:0;
+    transition-property: opacity;
+    transition-duration: 0.5s;
+    transition-delay:0.5s;
 }
 
 /* timeline icon */
@@ -78,6 +89,11 @@
     left:100%;
     right:auto;
     margin-left:17px;
+
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 0.3s;
+    transition-delay:1.3s;
 }
 
 /* lines that extend from far columns to center */
@@ -90,20 +106,30 @@
 
     top:4px;
     position: absolute;
-    height: 1px;
+    height: 2px;
     background: #ccc;
-    width: 100%;
     margin-top: 20px;
+
+    border-left-color:#ccc;
+    border-left-style:solid;
+    border-right-color:#ccc;
+    border-right-style:solid;
 
     left: 100%;
     right: auto;
 
-    margin-left: 15px;
+    margin-left: 13px;
     margin-right: auto;
-    border:0;
-    border-right:36px solid #ccc;
 
     z-index:-1;
+
+    width: 0%;
+    border-left-width:0px;
+    border-right-width:0px;
+
+    transition-property: width, border-left-width, border-right-width;
+    transition-duration: 0.3s;
+    transition-delay:1.0s;
 }
 
 /* css3 animation */
@@ -118,6 +144,25 @@
 {
     transition-property: height;
     transition-duration: 0.5s;
+}
+
+/* -layout-finalised */
+
+.-layout-finalised .event:before,
+.-layout-finalised .event:after
+{
+    opacity:1.0;
+}
+
+.-layout-finalised .arrow-line
+{
+    width:100%;
+    border-left-width:38px; 
+}
+
+.-layout-finalised .timeline-icon
+{
+    opacity:1.0;
 }
 
 /* formatting for events on xs screens  */
@@ -255,9 +300,8 @@
         right: 100%;
 
         margin-left:auto;
-        margin-right:15px;
-        border:0;
-        border-left:36px solid #ccc;
+        margin-right:13px;
+        border-left-width:38px;
     }
 
     /*
