@@ -59,6 +59,11 @@
         border-left-color: #1abc9c;
         border-right-color: #1abc9c;
     }
+    .cell:nth-child(3n) .arrow-line
+    {
+        border-color:#1abc9c;
+        background-color:#1abc9c
+    }
 
 .cell:nth-child(3n+1) .event
 {
@@ -70,6 +75,11 @@
         border-left-color: #2980b9;
         border-right-color: #2980b9;
     }
+    .cell:nth-child(3n+1) .arrow-line
+    {
+        border-color:#2980b9;
+        background-color:#2980b9
+    }
 
 .cell:nth-child(3n+2) .event
 {
@@ -80,4 +90,9 @@
     {
         border-left-color: #8e44ad;
         border-right-color: #8e44ad;
+    }
+    .cell:nth-child(3n+2) .arrow-line
+    {
+        border-color:#8e44ad;
+        background-color:#8e44ad
     }
