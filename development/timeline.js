@@ -430,7 +430,7 @@ $(window).resize(ratelimited_arrange);
 
 function debug_add_random_event()
 {
-    var event_date = debugGenerate_randomDate(new Date(2015, 0, 1), new Date(2015, 2, 28));
+    var event_date = debugGenerate_randomDate(new Date(2015, 0, 1), new Date(2015, 0, 31));
     var event =
     {
         Date: event_date,
