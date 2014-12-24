@@ -429,12 +429,57 @@ var ratelimited_arrange = debounce(function(){
 
 $(window).resize(ratelimited_arrange);
 
+function group_markers($row, Groups)
+{
+    var $events = $row.find(".event");
+
+    var groups_length = Groups.length;
+    var current_group = -1;
+    var group_id = "";
+
+    var prev_identifier = false;
+    for(var i=0; i < $events.length; i++)
+    {
+        var $event = $($events[i]);
+        var $marker = $event.find(".timeline-icon");
+
+        var curr_identifier = $marker.text();
+
+        if(prev_identifier == false || prev_identifier != curr_identifier)
+        {
+            current_group++;
+            if(groups_length > 1)
+            {
+                if(current_group > (groups_length - 1))
+                {
+                    // wraparound if Groups supplied
+                    current_group = 0;
+                }
+                group_id = Groups[current_group];
+            }
+            else
+            {
+                group_id = current_group;
+            }
+        }
+
+        $event.attr("data-group", group_id);
+
+        prev_identifier = curr_identifier;
+    }
+}
+
 $("#timeline")
     .on("refresh.timelineLayout", ".row.segment", function(e){
-        $(this).removeClass("-layout-finalised");
+        var $row = $(this);
+
+        $row.removeClass("-layout-finalised");
     })
     .on("refreshed.timelineLayout", ".row.segment", function(e){
-        $(this).addClass("-layout-finalised");
+        var $row = $(this);
+
+        $row.addClass("-layout-finalised");
+        group_markers($row, ["color1", "color2", "color3", "color4"]);
     });
 
 

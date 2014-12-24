@@ -49,50 +49,64 @@
     background-color: inherit;
 }
 
-.cell:nth-child(3n) .event
-{
-    background-color: #1abc9c;
-}
+/* colors from: http://flatuicolors.com/ */
 
-    .cell:nth-child(3n) .event:after
-    {
-        border-left-color: #1abc9c;
-        border-right-color: #1abc9c;
-    }
-    .cell:nth-child(3n) .arrow-line
-    {
-        border-color:#1abc9c;
-        background-color:#1abc9c
-    }
-
-.cell:nth-child(3n+1) .event
+.event[data-group="color1"]
 {
     background-color: #2980b9;
 }
-
-    .cell:nth-child(3n+1) .event:after
+    .event[data-group="color1"]:after
     {
         border-left-color: #2980b9;
         border-right-color: #2980b9;
     }
-    .cell:nth-child(3n+1) .arrow-line
+    .event[data-group="color1"] .arrow-line
     {
         border-color:#2980b9;
         background-color:#2980b9
     }
 
-.cell:nth-child(3n+2) .event
+.event[data-group="color2"]
 {
     background-color: #8e44ad;
 }
-
-    .cell:nth-child(3n+2) .event:after
+    .event[data-group="color2"]:after
     {
         border-left-color: #8e44ad;
         border-right-color: #8e44ad;
     }
-    .cell:nth-child(3n+2) .arrow-line
+    .event[data-group="color2"] .arrow-line
     {
         border-color:#8e44ad;
         background-color:#8e44ad
+    }
+
+.event[data-group="color3"]
+{
+   background-color: #1abc9c;
+}
+    .event[data-group="color3"]:after
+    {
+        border-left-color: #1abc9c;
+        border-right-color: #1abc9c;
+    }
+    .event[data-group="color3"] .arrow-line
+    {
+        border-color:#1abc9c;
+        background-color:#1abc9c
+    }
+
+.event[data-group="color4"]
+{
+   background-color: #d35400;
+}
+    .event[data-group="color4"]:after
+    {
+        border-left-color: #d35400;
+        border-right-color: #d35400;
+    }
+    .event[data-group="color4"] .arrow-line
+    {
+        border-color:#d35400;
+        background-color:#d35400
     }
