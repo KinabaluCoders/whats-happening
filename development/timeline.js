@@ -2,7 +2,7 @@ jQuery(document).ready(function($){
 
 var $timeline = $('#timeline');
 
-function _determine_row(event)
+function _determine_segment(event)
 {
     // seek existing segment
     var $row = $timeline.find('.row.segment[data-segment="' + event.segment + '"]');
@@ -49,7 +49,7 @@ function add_event(event, animate)
 
 function update_row(event, animate)
 {
-    var $row = _determine_row(event);
+    var $row = _determine_segment(event);
 
     var $cell = new_cell(event, animate);
 
