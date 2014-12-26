@@ -21,6 +21,11 @@
     padding:10px;
 }
 
+.event .content
+{
+    overflow:hidden;
+}
+
 .timeline-icon
 {
     background:black;
