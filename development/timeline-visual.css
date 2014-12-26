@@ -143,6 +143,7 @@
 .event.holiday
 {
     background-color:white;
+    font-weight:bold;
 }
     .event.holiday .timeline-icon
     {
