@@ -27,16 +27,16 @@ jQuery(document).ready(function($){
         });
     }
 
-    /* debug integration with timeline */
+    var callback = function(item){ console.log(item) };
 
-    var v2feed_url = "https://www.google.com/calendar/feeds/en.malaysia%23holiday%40group.v.calendar.google.com/public/basic?futureevents=true&alt=json&orderby=starttime&sortorder=ascending";
+    /* debug integration with timeline */
 
     var $timeline = $("#timeline");
     if($timeline.length > 0)
     {
         var timelineConfiguration = $timeline.data("timelineConfiguration");
 
-        parse_google_calendar_v2_basic_feed(v2feed_url, function(gcalevent)
+        callback = function(gcalevent)
         {
             // XXX: debug filtering 
 
@@ -51,13 +51,14 @@ jQuery(document).ready(function($){
 
             gcalevent.classes = ["holiday"];
             gcalevent.Date = gcalevent.datetimeStart;
+            gcalevent._visibleContent = gcalevent.title;
+            gcalevent.title = false;
             $("#timeline").trigger("addEvent.timeline", [gcalevent, true]);
-        });
+        };
     }
-    else
-    {
-        parse_google_calendar_v2_basic_feed(v2feed_url, function(gcalevent){
-            console.log(gcalevent);
-        });
-    }
+
+    var v2feed_url = "https://www.google.com/calendar/feeds/en.malaysia%23holiday%40group.v.calendar.google.com/public/basic?futureevents=true&alt=json&orderby=starttime&sortorder=ascending";
+
+    parse_google_calendar_v2_basic_feed(v2feed_url, callback);
+
 });

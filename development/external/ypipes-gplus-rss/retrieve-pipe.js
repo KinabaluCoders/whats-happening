@@ -25,8 +25,6 @@ jQuery(document).ready(function($){
     var $timeline = $("#timeline");
     if($timeline.length > 0)
     {
-        var timelineConfiguration = $timeline.data("timelineConfiguration");
-
         callback = function(gplusevent)
         {
             if(!gplusevent.title) return true;
@@ -35,8 +33,9 @@ jQuery(document).ready(function($){
             // add event to timeline
             gplusevent.classes = ["post"];
             gplusevent.Date = new Date(gplusevent.publishedDate);
+            gplusevent._visibleContent = gplusevent.content;
             $timeline.trigger("addEvent.timeline", [gplusevent, true]);
-        }
+        };
     }
 
     /* retrieve and process feed */
