@@ -27,21 +27,50 @@
     color:white;
 }
 
-.event:hover
+@media (min-width: 992px)
 {
-    -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
-}
+    /*
+    TIMELINE ICONS (CENTER)
+    .arrow and .arrow-line pointing at this on timeline
+    */
 
-.event:hover .timeline-icon
-{
-    z-index:1001;
-    font-weight:bold;
-}
+    .timeline-icon:not(.first-in-group)
+    {
+        top: 15px;
+        width:20px;
+        height:20px;
+        margin-left:22px;
+        color:transparent;
+    }
 
-.event:hover .arrow-line
-{
-    /* z-index:1000; */
+    /* far-left column (1/4): icon in center */
+
+    .row .cell.col-md-offset-0 .timeline-icon:not(.first-in-group) {
+        left:200%;
+        right:auto;
+        margin-left:0;
+        margin-left:56px;
+    }
+
+    /* left column (2/4): icon in center (default) */
+
+    /* right column (3/4): icon in center */
+
+    .row .cell.col-md-offset-6 .timeline-icon:not(.first-in-group) {
+        left:auto;
+        right:100%;
+        margin-left:0;
+        margin-right:22px;
+    }
+
+    /* far-right column (4/4): icon in center */
+
+    .row .cell.col-md-offset-9 .timeline-icon:not(.first-in-group) {
+        left:auto;
+        right:200%;
+        margin-left:0;
+        margin-right:56px;
+    }
 }
 
 .cell .event .timeline-icon

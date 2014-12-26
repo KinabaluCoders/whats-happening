@@ -439,15 +439,20 @@ function group_markers($row, Groups)
 {
     var $events = $row.find(".event");
 
+    var events_length = $events.length;
     var groups_length = Groups.length;
     var current_group = -1;
     var group_id = "";
 
     var $prev_marker = false;
-    for(var i=0; i < $events.length; i++)
+    for(var i=0; i < events_length; i++)
     {
         var $event = $($events[i]);
         var $marker = $event.find(".timeline-icon");
+
+        var group_has_changed = false;
+
+        $marker.removeClass("first-in-group last-in-group");
 
         if($prev_marker == false || $prev_marker.text() != $marker.text())
         {
@@ -456,7 +461,7 @@ function group_markers($row, Groups)
             {
                 if(current_group > (groups_length - 1))
                 {
-                    // wraparound if Groups supplied
+                    // wraparound for supplied Groups
                     current_group = 0;
                 }
                 group_id = Groups[current_group];
@@ -465,9 +470,26 @@ function group_markers($row, Groups)
             {
                 group_id = current_group;
             }
+
+            if($prev_marker)
+            {
+                $prev_marker.addClass("last-in-group");
+            }
+
+            $marker.addClass("first-in-group");
+        }
+
+        if(i == (events_length - 1))
+        {
+            // at last event for entire segment
+            if($marker)
+            {
+                $marker.addClass("last-in-group");
+            }
         }
 
         $event.attr("data-group", group_id);
+        $event.attr("data-icounter", i);
 
         $prev_marker = $marker;
     }
