@@ -443,15 +443,13 @@ function group_markers($row, Groups)
     var current_group = -1;
     var group_id = "";
 
-    var prev_identifier = false;
+    var $prev_marker = false;
     for(var i=0; i < $events.length; i++)
     {
         var $event = $($events[i]);
         var $marker = $event.find(".timeline-icon");
 
-        var curr_identifier = $marker.text();
-
-        if(prev_identifier == false || prev_identifier != curr_identifier)
+        if($prev_marker == false || $prev_marker.text() != $marker.text())
         {
             current_group++;
             if(groups_length > 1)
@@ -471,7 +469,7 @@ function group_markers($row, Groups)
 
         $event.attr("data-group", group_id);
 
-        prev_identifier = curr_identifier;
+        $prev_marker = $marker;
     }
 }
 
