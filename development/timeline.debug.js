@@ -31,7 +31,7 @@ jQuery(document).ready(function($){
             debug_add_random_event(true);
         });
 
-    for(var i=0; i < 50; i++)
+    for(var i=0; i < 30; i++)
     {
         debug_add_random_event();
     }

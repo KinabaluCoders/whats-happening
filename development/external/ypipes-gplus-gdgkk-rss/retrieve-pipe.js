@@ -25,16 +25,16 @@ jQuery(document).ready(function($){
     var $timeline = $("#timeline");
     if($timeline.length > 0)
     {
-        callback = function(gplusevent)
+        callback = function(feeditem)
         {
-            if(!gplusevent.title) return true;
-            if(!gplusevent.content) return true;
+            if(!feeditem.title) return true;
+            if(!feeditem.content) return true;
 
             // add event to timeline
-            gplusevent.classes = ["post"];
-            gplusevent.Date = new Date(gplusevent.publishedDate);
-            gplusevent._visibleContent = gplusevent.content;
-            $timeline.trigger("addEvent.timeline", [gplusevent, true]);
+            feeditem.classes = ["post"];
+            feeditem.Date = new Date(feeditem.publishedDate);
+            feeditem._visibleContent = feeditem.content;
+            $timeline.trigger("addEvent.timeline", [feeditem, true]);
         };
     }
 
