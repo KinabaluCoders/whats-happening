@@ -11,7 +11,8 @@ jQuery(document).ready(function($){
         var event =
         {
             Date: event_date,
-            title: debugGenerate_loremIpsum(100, 3)
+            title: debugGenerate_loremIpsum(15, 3),
+            _visibleContent: debugGenerate_loremIpsum(100, 1)
         };
         return event;
     }
