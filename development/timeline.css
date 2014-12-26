@@ -157,7 +157,7 @@
 .-layout-finalised .arrow-line
 {
     width:100%;
-    border-left-width:38px; 
+    border-left-width:52px; 
 }
 
 .-layout-finalised .timeline-icon
@@ -301,7 +301,6 @@
 
         margin-left:auto;
         margin-right:13px;
-        border-left-width:38px;
     }
 
     /*
