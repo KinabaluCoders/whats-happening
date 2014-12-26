@@ -188,7 +188,16 @@ function new_cell(event, animate)
     }
 
     $content = $('<div class="content"></div>');
-    $content.append(event.title + ' ');
+
+    if(event.title)
+    {
+        $content.append('<h3>' + event.title + '</h3>');
+    }
+
+    if(event._visibleContent)
+    {
+        $content.append('<p>' + event._visibleContent + "</p>");
+    }
 
     $event.append($content);
     $cell.append($event);
