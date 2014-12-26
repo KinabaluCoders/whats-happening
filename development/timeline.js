@@ -42,6 +42,8 @@ function _determine_row(event)
 
 function add_event(event, animate)
 {
+    event.segment = segment_from_event(event);
+
     update_row(event, animate);
     update_segment_dividers();
 }
@@ -519,20 +521,27 @@ $("#timeline")
         var $row = $(this);
 
         $row.css("background-color", "red");
+    })
+    .on("addEvent.timeline", function(e, event, animate){
+        add_event(event, animate);
+        ratelimited_arrange();
     });
 
-
-function debug_add_random_event(animate)
+function debug_random_event()
 {
     var event_date = debugGenerate_randomDate(new Date(2015, 0, 1), new Date(2015, 0, 31));
     var event =
     {
         Date: event_date,
-        segment: false,
         title: debugGenerate_loremIpsum(100, 3)
     };
-    event.segment = segment_from_event(event);
-    add_event(event, animate);
+    return event;
+}
+
+function debug_add_random_event(animate)
+{
+    var random_event = debug_random_event();
+    add_event(random_event, animate);
     ratelimited_arrange();
 }
 
