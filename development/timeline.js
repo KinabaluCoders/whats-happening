@@ -98,7 +98,7 @@ function update_segment_dividers()
 
         if($prev_segment == false)
         {
-            _boundary.title = "START";
+            _boundary.title = "FUTURE (next few months)";
             _boundary.signature = "start";
 
             the_boundary(_boundary)
@@ -108,7 +108,7 @@ function update_segment_dividers()
 
         if($next_segment == false)
         {
-            _boundary.title = "END";
+            _boundary.title = "PAST";
             _boundary.signature = "end";
 
             the_boundary(_boundary)
@@ -118,6 +118,8 @@ function update_segment_dividers()
         else
         {
             _boundary.title = "AFTER " + $segment.attr("data-segment");
+            _boundary.title = "WHAT'S HAPPENING IN " + $next_segment.attr("data-segment");
+
             _boundary.signature = "after-" + $segment.attr("data-segment");
 
             the_boundary(_boundary)
