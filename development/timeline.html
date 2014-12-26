@@ -14,6 +14,11 @@
     <link href="timeline.css" rel="stylesheet">
     <link href="timeline-visual.css" rel="stylesheet">
     <style>
+        #debug-add-event
+        {
+            display:none;
+        }
+
         /* debug (bootstrap) */
 
         .debug-bootstrap div
@@ -42,11 +47,12 @@
     </style>
     <script src="debug.generator-functions.js"></script>
     <script src="timeline.js"></script>
+    <script src="timeline.debug.js"></script>
     <script src="external/google-calendar/retrieve-calendar.js"></script>
 </head>
 <body class="x-debug-bootstrap">
 
-    <input id="add-event" type="button" value="add event" />
+    <input id="debug-add-event" type="button" value="add event" />
 
     <div id="timeline-background">
         <div id="timeline" class="container">

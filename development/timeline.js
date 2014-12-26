@@ -45,7 +45,6 @@ function add_event(event, animate)
     event.segment = segment_from_event(event);
 
     update_row(event, animate);
-    update_segment_dividers();
 }
 
 function update_row(event, animate)
@@ -401,12 +400,6 @@ function arrange_events($row)
     $row.trigger("refreshed.timelineLayout");
 }
 
-function segment_from_event(event)
-{
-    var theDate = event.Date;
-    return (theDate.getFullYear() * 100) + theDate.getMonth(); // XXX: produces YYYYMM as integer
-}
-
 // Returns a function, that, as long as it continues to be invoked, will not
 // be triggered. The function will be called after it stops being called for
 // N milliseconds. If `immediate` is passed, trigger the function on the
@@ -437,8 +430,35 @@ var ratelimited_arrange = debounce(function(){
     $("#timeline .row.segment").each(function(i, segment){
         arrange_events($(segment));
     });
-}, 100);
+}, 250);
 
+
+$("#timeline")
+    .on("refresh.timelineLayout", ".row.segment", function(e){
+        var $row = $(this);
+
+        $row.removeClass("-layout-finalised");
+    })
+    .on("refreshed.timelineLayout", ".row.segment", function(e){
+        var $row = $(this);
+
+        $row.addClass("-layout-finalised");
+
+        $row.find(".-animate-newly-added").removeClass("-animate-newly-added");
+
+        group_markers($row, ["color1", "color2", "color3", "color4"]);
+
+        update_segment_dividers();
+    })
+    .on("updated.timelineBoundary", ".row.boundary", function(e){
+        var $row = $(this);
+
+        $row.css("background-color", "red");
+    })
+    .on("addEvent.timeline", function(e, event, animate){
+        add_event(event, animate);
+        ratelimited_arrange();
+    });
 
 $(window).resize(ratelimited_arrange);
 
@@ -502,60 +522,47 @@ function group_markers($row, Groups)
     }
 }
 
-$("#timeline")
-    .on("refresh.timelineLayout", ".row.segment", function(e){
-        var $row = $(this);
-
-        $row.removeClass("-layout-finalised");
-    })
-    .on("refreshed.timelineLayout", ".row.segment", function(e){
-        var $row = $(this);
-
-        $row.addClass("-layout-finalised");
-
-        $row.find(".-animate-newly-added").removeClass("-animate-newly-added");
-
-        group_markers($row, ["color1", "color2", "color3", "color4"]);
-    })
-    .on("updated.timelineBoundary", ".row.boundary", function(e){
-        var $row = $(this);
-
-        $row.css("background-color", "red");
-    })
-    .on("addEvent.timeline", function(e, event, animate){
-        add_event(event, animate);
-        ratelimited_arrange();
-    });
-
-function debug_random_event()
+function segment_from_event(event)
 {
-    var event_date = debugGenerate_randomDate(new Date(2015, 0, 1), new Date(2015, 0, 31));
-    var event =
+    var theDate = event.Date;
+
+    var theSegment = "";
+
+    var timelineConfiguration = $("#timeline").data("timelineConfiguration");
+
+    if(theDate < timelineConfiguration.pastDate)
     {
-        Date: event_date,
-        title: debugGenerate_loremIpsum(100, 3)
-    };
-    return event;
-}
-
-function debug_add_random_event(animate)
-{
-    var random_event = debug_random_event();
-    add_event(random_event, animate);
-    ratelimited_arrange();
-}
-
-$("#add-event").click(function(e){
-    debug_add_random_event(true);
-});
-
-if(true)
-{
-    for(var i=0; i < 10; i++)
-    {
-        debug_add_random_event();
+        theSegment = (pastDate.getFullYear() * 100) + pastDate.getMonth(); // XXX: produces YYYYMM as integer
     }
+    else if(theDate > timelineConfiguration.futureDate)
+    {
+        theSegment = (futureDate.getFullYear() * 100) + futureDate.getMonth(); // XXX: produces YYYYMM as integer
+    }
+    else
+    {
+        theSegment = (theDate.getFullYear() * 100) + theDate.getMonth(); // XXX: produces YYYYMM as integer
+    }
+
+    return theSegment;
 }
+
+// shared configuration
+
+var futureDate = new Date();
+futureDate.setMonth((futureDate.getMonth() + 3));
+futureDate = new Date(futureDate.getFullYear(), futureDate.getMonth() + 1, 0);
+
+var pastDate = new Date();
+pastDate.setMonth((pastDate.getMonth() - 3));
+pastDate = new Date(pastDate.getFullYear(), pastDate.getMonth(), 1);
+
+var timelineConfiguration = 
+{
+    "pastDate": pastDate,
+    "futureDate": futureDate
+};
+
+$("#timeline").data("timelineConfiguration", timelineConfiguration);
 
 $(window).resize();
 
