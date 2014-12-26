@@ -117,8 +117,22 @@ function update_segment_dividers()
         }
         else
         {
-            _boundary.title = "AFTER " + $segment.attr("data-segment");
-            _boundary.title = "WHAT'S HAPPENING IN " + $next_segment.attr("data-segment");
+            var NOW = new Date();
+            var current_segment = (NOW.getFullYear() * 100) + NOW.getMonth();
+
+            var next_segment = $next_segment.attr("data-segment");
+            var theYear = parseInt(next_segment / 100);
+            var theMonth = parseInt(next_segment % 100);
+            var textYearMonth = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][theMonth] + " " +theYear;
+
+            if(next_segment >= current_segment)
+            {
+                _boundary.title = "WHAT'S HAPPENING IN " + textYearMonth;
+            }
+            else
+            {
+                _boundary.title = "WHAT HAPPENED IN " + textYearMonth;
+            }
 
             _boundary.signature = "after-" + $segment.attr("data-segment");
 
