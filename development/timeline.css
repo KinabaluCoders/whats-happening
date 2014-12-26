@@ -1,3 +1,8 @@
+#timeline
+{
+    overflow:hidden;
+}
+
 .row > div > .event
 {
     margin-left:15px;
@@ -28,6 +33,11 @@
     -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
     min-height:85px;
+
+    opacity: 1;
+    transition-property: opacity;
+    transition-duration: 0.3s;
+    transition-delay:0s;
 }
 
 /* css arrow */
@@ -163,6 +173,19 @@
 .-layout-finalised .timeline-icon
 {
     opacity:1.0;
+}
+
+/* live-added event */
+
+.event.-animate-newly-added
+{
+    opacity:0;
+}
+
+.event.-animate-newly-added .arrow-line
+{
+    width:0%;
+    border-left-width:0; 
 }
 
 /* formatting for events on xs screens  */

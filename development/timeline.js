@@ -40,17 +40,17 @@ function _determine_row(event)
     return $row;
 }
 
-function add_event(event)
+function add_event(event, animate)
 {
-    update_row(event);
+    update_row(event, animate);
     update_segment_dividers();
 }
 
-function update_row(event)
+function update_row(event, animate)
 {
     var $row = _determine_row(event);
 
-    var $cell = new_cell(event);
+    var $cell = new_cell(event, animate);
 
     var _insert = false;
     var $cells = $row.find(".cell");
@@ -149,7 +149,7 @@ function the_boundary(_boundary)
 var _cell_counter = 0;
 var _event_counter = 0;
 
-function new_cell(event)
+function new_cell(event, animate)
 {
     $cell = $('<div class="cell col-xs-offset-1 col-xs-11 col-sm-offset-0 col-sm-6 col-md-3">');
     $cell.attr("id", "-cell-" + _event_counter++);
@@ -159,6 +159,11 @@ function new_cell(event)
     $event.attr("id", "-event-" + _event_counter++);
     $event.append($('<div class="arrow-line visible-md-block visible-lg-block"></div>'));
     $event.append($('<div class="timeline-icon">' + event.Date.getDate() + '</div>'));
+
+    if(animate)
+    {
+        $event.addClass("-animate-newly-added");
+    }
 
     $content = $('<div class="content"></div>');
 
@@ -505,6 +510,9 @@ $("#timeline")
         var $row = $(this);
 
         $row.addClass("-layout-finalised");
+
+        $row.find(".-animate-newly-added").removeClass("-animate-newly-added");
+
         group_markers($row, ["color1", "color2", "color3", "color4"]);
     })
     .on("updated.timelineBoundary", ".row.boundary", function(e){
@@ -514,7 +522,7 @@ $("#timeline")
     });
 
 
-function debug_add_random_event()
+function debug_add_random_event(animate)
 {
     var event_date = debugGenerate_randomDate(new Date(2015, 0, 1), new Date(2015, 0, 31));
     var event =
@@ -524,17 +532,17 @@ function debug_add_random_event()
         title: debugGenerate_loremIpsum(100, 3)
     };
     event.segment = segment_from_event(event);
-    add_event(event);
+    add_event(event, animate);
     ratelimited_arrange();
 }
 
 $("#add-event").click(function(e){
-    debug_add_random_event();
+    debug_add_random_event(true);
 });
 
 if(true)
 {
-    for(var i=0; i < 50; i++)
+    for(var i=0; i < 10; i++)
     {
         debug_add_random_event();
     }
