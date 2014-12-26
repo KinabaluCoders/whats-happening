@@ -182,11 +182,13 @@ function new_cell(event, animate)
         $event.addClass("-animate-newly-added");
     }
 
-    $content = $('<div class="content"></div>');
+    if(event.classes)
+    {
+        $event.addClass(event.classes.join(" "));
+    }
 
-    // $content.append($('<b style="font-size:2.0em; float:left; margin-right:3px;">' /*+ event.Date.getMonth() + "/" */+ event.Date.getDate() + "</b>"));
+    $content = $('<div class="content"></div>');
     $content.append(event.title + ' ');
-    // $content.append(event.Date.toString() + ', ' + event.segment + ')');
 
     $event.append($content);
     $cell.append($event);
@@ -532,7 +534,6 @@ function group_markers($row, Groups)
         }
 
         $event.attr("data-group", group_id);
-        $event.attr("data-icounter", i);
 
         $prev_marker = $marker;
     }

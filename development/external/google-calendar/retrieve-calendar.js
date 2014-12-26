@@ -40,7 +40,8 @@ jQuery(document).ready(function($){
         {
             // XXX: debug filtering 
 
-            var minimum_date = timelineConfiguration.pastDate;
+            var NOW = new Date();
+            var minimum_date = new Date(NOW.getFullYear(), NOW.getMonth(), 1);
             var maximum_date = timelineConfiguration.futureDate;
 
             if(gcalevent.datetimeStart < minimum_date) return true;
@@ -48,6 +49,7 @@ jQuery(document).ready(function($){
 
             // add event to timeline
 
+            gcalevent.classes = ["holiday"];
             gcalevent.Date = gcalevent.datetimeStart;
             $("#timeline").trigger("addEvent.timeline", [gcalevent, true]);
         });

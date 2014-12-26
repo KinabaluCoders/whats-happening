@@ -139,3 +139,28 @@
         border-color:#d35400;
         background-color:#d35400
     }
+
+.event.holiday
+{
+    background-color:white;
+}
+    .event.holiday .timeline-icon
+    {
+        background-color: #ccc;
+    }
+    .event.holiday:after
+    {
+        border-left-color:white;
+        border-right-color:white;
+    }
+    .event.holiday .arrow-line
+    {
+        border-color:#eaeaea;
+        background-color:#eaeaea;
+    }
+    .event.holiday 
+    {
+        min-height:55px;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
