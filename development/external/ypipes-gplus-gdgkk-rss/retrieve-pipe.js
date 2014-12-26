@@ -31,7 +31,7 @@ jQuery(document).ready(function($){
             if(!feeditem.content) return true;
 
             // add event to timeline
-            feeditem.classes = ["post"];
+            feeditem.classes = ["post", "gplus", "gdgkk"];
             feeditem.Date = new Date(feeditem.publishedDate);
             feeditem._visibleContent = feeditem.content;
             $timeline.trigger("addEvent.timeline", [feeditem, true]);

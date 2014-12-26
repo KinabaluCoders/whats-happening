@@ -49,7 +49,7 @@ jQuery(document).ready(function($){
 
             // add event to timeline
 
-            gcalevent.classes = ["holiday"];
+            gcalevent.classes = ["holiday", "googlecalendar"];
             gcalevent.Date = gcalevent.datetimeStart;
             gcalevent._visibleContent = gcalevent.title;
             gcalevent.title = false;
